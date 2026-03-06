@@ -4,139 +4,157 @@ interface AboutPageProps {
   onNavigate: (page: string) => void;
 }
 
-const teachers = [
-  { name: 'Елена Воронова', role: 'Преподаватель живописи', exp: '20 лет опыта', avatar: 'Е', color: 'from-gold to-gold-dark' },
-  { name: 'Михаил Дорогов', role: 'Фотография и медиа', exp: '15 лет опыта', avatar: 'М', color: 'from-violet to-violet-dark' },
-  { name: 'Светлана Кузнецова', role: 'Графический дизайн', exp: '12 лет опыта', avatar: 'С', color: 'from-gold-light to-gold' },
-  { name: 'Андрей Белов', role: 'Скульптура и керамика', exp: '18 лет опыта', avatar: 'А', color: 'from-violet-light to-violet' },
+const values = [
+  { icon: 'GraduationCap', title: 'Профессионализм', desc: 'Педагоги ведущих театральных ВУЗов Москвы: МХАТ, ВТУ им. Щукина, ВГИК и других.' },
+  { icon: 'Zap', title: 'Интенсивность', desc: 'Авторские методики обеспечивают быстрый прогресс даже для начинающих.' },
+  { icon: 'Heart', title: 'Атмосфера', desc: 'Творческая среда единомышленников, где каждый вдохновляет друг друга.' },
+  { icon: 'Target', title: 'Практика', desc: 'Реальные навыки для работы в кино, на телевидении и публичных выступлений.' },
 ];
 
-const values = [
-  { icon: 'Heart', title: 'Страсть к искусству', desc: 'Мы любим то, чему учим, и эта любовь передаётся студентам' },
-  { icon: 'Users', title: 'Сообщество', desc: 'Монпарнас — это не просто школа, это семья творческих людей' },
-  { icon: 'Award', title: 'Качество', desc: 'Только лучшие материалы, оборудование и методики обучения' },
-  { icon: 'Zap', title: 'Развитие', desc: 'Постоянное обновление программ и внедрение новых техник' },
-];
+const schools = ['МХАТ', 'ВТУ им. Щукина', 'ВГИК', 'ГИТИС', 'ВТУ им. Вахтангова'];
 
 export default function AboutPage({ onNavigate }: AboutPageProps) {
   return (
-    <div className="min-h-screen pt-24">
-      {/* Hero */}
-      <section className="py-16 pb-0">
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="text-center mb-4">
-            <span className="text-gold text-xs font-golos tracking-widest uppercase">О нас</span>
+    <div className="pt-24 pb-20 overflow-x-hidden">
+      {/* HERO */}
+      <section className="py-20 px-6 text-center relative">
+        <div className="absolute inset-0 opacity-5"
+          style={{
+            backgroundImage: 'repeating-linear-gradient(0deg, transparent, transparent 59px, rgba(212,168,83,0.3) 60px), repeating-linear-gradient(90deg, transparent, transparent 59px, rgba(212,168,83,0.3) 60px)',
+          }}
+        />
+        <div className="relative max-w-4xl mx-auto">
+          <div className="flex items-center justify-center gap-4 mb-8">
+            <div className="h-px w-8 bg-gold/40" />
+            <span className="text-gold/60 text-[10px] tracking-[0.4em] uppercase font-golos">Об академии</span>
+            <div className="h-px w-8 bg-gold/40" />
           </div>
-          <h1 className="font-cormorant text-6xl md:text-7xl font-light text-center mb-8">
-            Место, где <span className="text-gradient-gold italic">рождается</span><br />искусство
+          <h1 className="font-playfair text-5xl md:text-7xl font-bold text-foreground leading-tight mb-8">
+            Академия кино<br />
+            <span className="italic text-gradient-gold">Montparnas</span>
           </h1>
-          <p className="font-golos text-muted-foreground text-lg text-center max-w-2xl mx-auto leading-relaxed mb-16">
-            С 2009 года мы помогаем людям раскрыть творческий потенциал. Монпарнас — 
-            это пространство свободы, вдохновения и мастерства в самом сердце Москвы.
+          <p className="text-muted-foreground text-lg leading-relaxed max-w-2xl mx-auto font-golos">
+            Уникальный образовательный проект, объединяющий Академию актёрского мастерства,
+            Школу юного актёра и Мастер-курсы с ведущими представителями киноиндустрии.
           </p>
-
-          <div className="relative rounded-3xl overflow-hidden h-96 mb-24">
-            <img
-              src="https://cdn.poehali.dev/projects/f836a67a-a8be-4af0-8a66-d2f5ea2f50dd/files/ca1594a0-45ec-4c4a-82fc-ef5c97388d32.jpg"
-              alt="Школа Монпарнас"
-              className="w-full h-full object-cover"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-background/60 to-transparent" />
-          </div>
         </div>
       </section>
 
-      {/* Story */}
-      <section className="py-16">
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
-            <div>
-              <span className="text-gold text-xs font-golos tracking-widest uppercase">История</span>
-              <h2 className="font-cormorant text-4xl font-light mt-3 mb-6 text-foreground">
-                Как всё начиналось
-              </h2>
-              <p className="font-golos text-muted-foreground leading-relaxed mb-4">
-                Школа была основана в 2009 году художником Николаем Паршиным. Вдохновлённый парижским кварталом Монпарнас — меккой художников начала XX века — он мечтал создать такое же живое творческое пространство в Москве.
-              </p>
-              <p className="font-golos text-muted-foreground leading-relaxed mb-4">
-                Начав с небольшой студии и трёх преподавателей, сегодня Монпарнас — это 600 кв.м. творческих пространств, 12 направлений обучения и команда из 20 профессиональных педагогов.
-              </p>
-              <p className="font-golos text-muted-foreground leading-relaxed">
-                За 15 лет через наши классы прошли более 2000 студентов. Многие из них стали профессиональными художниками, дизайнерами, фотографами.
-              </p>
+      {/* ОПИСАНИЕ */}
+      <section className="py-20 px-6 bg-black/30">
+        <div className="max-w-5xl mx-auto grid md:grid-cols-2 gap-16 items-center">
+          <div>
+            <h2 className="font-playfair text-3xl md:text-4xl font-bold text-foreground mb-6">
+              Три направления<br />
+              <span className="italic text-gradient-gold">одной академии</span>
+            </h2>
+            <div className="space-y-5">
+              {[
+                { title: 'Академия актёрского мастерства', desc: 'Базовый и продвинутый курсы для тех, кто хочет профессионально освоить актёрскую профессию.' },
+                { title: 'Школа юного актёра', desc: 'Специальная программа для детей и подростков — раскрытие творческого потенциала с юных лет.' },
+                { title: 'Мастер-курсы', desc: 'Уникальные курсы с ведущими представителями киноиндустрии. Голливудский метод, звёздные мастер-классы.' },
+              ].map((item, i) => (
+                <div key={i} className="flex gap-4">
+                  <div className="w-6 h-6 border border-gold/40 flex items-center justify-center flex-shrink-0 mt-0.5">
+                    <div className="w-2 h-2 bg-gold/60" />
+                  </div>
+                  <div>
+                    <div className="text-foreground font-semibold mb-1 font-golos">{item.title}</div>
+                    <div className="text-muted-foreground text-sm font-golos leading-relaxed">{item.desc}</div>
+                  </div>
+                </div>
+              ))}
             </div>
-            <div className="grid grid-cols-2 gap-4">
-              <div className="card-glass rounded-2xl p-6 text-center">
-                <div className="font-cormorant text-5xl font-semibold text-gradient-gold mb-2">2009</div>
-                <div className="font-golos text-sm text-muted-foreground">год основания</div>
-              </div>
-              <div className="card-glass rounded-2xl p-6 text-center">
-                <div className="font-cormorant text-5xl font-semibold text-gradient-gold mb-2">600</div>
-                <div className="font-golos text-sm text-muted-foreground">кв.м. студий</div>
-              </div>
-              <div className="card-glass rounded-2xl p-6 text-center">
-                <div className="font-cormorant text-5xl font-semibold text-gradient-gold mb-2">20</div>
-                <div className="font-golos text-sm text-muted-foreground">преподавателей</div>
-              </div>
-              <div className="card-glass rounded-2xl p-6 text-center">
-                <div className="font-cormorant text-5xl font-semibold text-gradient-gold mb-2">12</div>
-                <div className="font-golos text-sm text-muted-foreground">направлений</div>
-              </div>
+          </div>
+
+          <div className="border border-gold/15 p-10">
+            <div className="text-center mb-8">
+              <div className="font-playfair text-5xl font-bold text-gradient-gold mb-1">10+</div>
+              <div className="text-white/40 text-xs tracking-widest uppercase font-golos">лет опыта</div>
+            </div>
+            <div className="section-divider mb-8" />
+            <div className="text-center mb-8">
+              <div className="font-playfair text-5xl font-bold text-gradient-gold mb-1">300+</div>
+              <div className="text-white/40 text-xs tracking-widest uppercase font-golos">выпускников</div>
+            </div>
+            <div className="section-divider mb-8" />
+            <div className="text-center">
+              <p className="text-muted-foreground/70 text-sm font-golos italic leading-relaxed">
+                «Наша цель — дать актуальные знания и практические навыки для развития в актёрской профессии и обычной жизни»
+              </p>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Values */}
-      <section className="py-16 border-t border-border">
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="text-center mb-12">
-            <span className="text-gold text-xs font-golos tracking-widest uppercase">Ценности</span>
-            <h2 className="font-cormorant text-4xl font-light mt-3 text-foreground">Во что мы верим</h2>
+      {/* ЦЕННОСТИ */}
+      <section className="py-20 px-6">
+        <div className="max-w-5xl mx-auto">
+          <div className="text-center mb-14">
+            <h2 className="font-playfair text-4xl font-bold text-foreground">
+              Наши <span className="italic text-gradient-gold">ценности</span>
+            </h2>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
             {values.map((v, i) => (
-              <div key={i} className="card-glass rounded-2xl p-6 card-glow transition-all duration-400">
-                <div className="w-11 h-11 rounded-xl bg-gold/10 border border-gold/20 flex items-center justify-center mb-4">
-                  <Icon name={v.icon} fallback="Heart" size={20} className="text-gold" />
+              <div key={i} className="card-glass card-glow p-6 transition-all duration-500 group text-center">
+                <div className="w-10 h-10 border border-gold/30 flex items-center justify-center text-gold mx-auto mb-5 group-hover:bg-gold group-hover:text-black transition-all duration-300">
+                  <Icon name={v.icon} size={18} />
                 </div>
-                <h3 className="font-cormorant text-xl font-semibold mb-2">{v.title}</h3>
-                <p className="font-golos text-sm text-muted-foreground leading-relaxed">{v.desc}</p>
+                <h3 className="font-playfair text-lg font-semibold text-foreground mb-2">{v.title}</h3>
+                <p className="text-muted-foreground text-xs leading-relaxed font-golos">{v.desc}</p>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Team */}
-      <section className="py-16 border-t border-border">
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="text-center mb-12">
-            <span className="text-gold text-xs font-golos tracking-widest uppercase">Команда</span>
-            <h2 className="font-cormorant text-4xl font-light mt-3 text-foreground">Наши преподаватели</h2>
+      {/* ВУЗы */}
+      <section className="py-16 px-6 bg-black/30">
+        <div className="max-w-4xl mx-auto text-center">
+          <div className="flex items-center justify-center gap-4 mb-10">
+            <div className="h-px w-8 bg-gold/40" />
+            <span className="text-gold/60 text-[10px] tracking-[0.4em] uppercase font-golos">Педагоги из ВУЗов</span>
+            <div className="h-px w-8 bg-gold/40" />
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
-            {teachers.map((t, i) => (
-              <div key={i} className="card-glass rounded-2xl p-6 text-center card-glow transition-all duration-400">
-                <div className={`w-20 h-20 rounded-full bg-gradient-to-br ${t.color} flex items-center justify-center mx-auto mb-4 text-background font-cormorant font-bold text-3xl shadow-lg`}>
-                  {t.avatar}
-                </div>
-                <h3 className="font-golos font-semibold text-foreground mb-1">{t.name}</h3>
-                <p className="font-golos text-sm text-gold mb-1">{t.role}</p>
-                <p className="font-golos text-xs text-muted-foreground">{t.exp}</p>
+          <div className="flex flex-wrap justify-center gap-4">
+            {schools.map((school, i) => (
+              <div key={i} className="border border-gold/20 px-6 py-3 text-sm text-foreground/70 font-golos tracking-wider hover:border-gold/40 hover:text-foreground transition-all duration-300">
+                {school}
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* CTA */}
-      <section className="py-16 pb-24">
-        <div className="max-w-7xl mx-auto px-6 text-center">
-          <h2 className="font-cormorant text-4xl font-light mb-4">Присоединяйся к нашей семье</h2>
-          <p className="font-golos text-muted-foreground mb-8">Запишись на пробное занятие и почувствуй атмосферу Монпарнаса</p>
-          <button onClick={() => onNavigate('enroll')} className="btn-gold px-8 py-3.5 rounded-full font-golos font-semibold text-sm tracking-wide inline-flex items-center gap-2">
-            Стать студентом <Icon name="ArrowRight" size={15} />
+      {/* АДРЕС */}
+      <section className="py-20 px-6">
+        <div className="max-w-3xl mx-auto text-center">
+          <h2 className="font-playfair text-3xl md:text-4xl font-bold text-foreground mb-8">
+            Найдите нас <span className="italic text-gradient-gold">в Москве</span>
+          </h2>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
+            <div className="border border-gold/15 p-6 text-center">
+              <Icon name="MapPin" size={20} className="text-gold mx-auto mb-3" />
+              <div className="text-xs tracking-widest uppercase text-muted-foreground font-golos mb-2">Адрес</div>
+              <div className="text-foreground text-sm font-golos">г. Москва, ул. Малая Лубянка, дом 16</div>
+            </div>
+            <div className="border border-gold/15 p-6 text-center">
+              <Icon name="Phone" size={20} className="text-gold mx-auto mb-3" />
+              <div className="text-xs tracking-widest uppercase text-muted-foreground font-golos mb-2">Телефон</div>
+              <a href="tel:+79153279755" className="text-foreground text-sm font-golos hover:text-gold transition-colors">+7 (915) 327-97-55</a>
+            </div>
+            <div className="border border-gold/15 p-6 text-center">
+              <Icon name="Mail" size={20} className="text-gold mx-auto mb-3" />
+              <div className="text-xs tracking-widest uppercase text-muted-foreground font-golos mb-2">Эл. почта</div>
+              <a href="mailto:info@montparnas.ru" className="text-foreground text-sm font-golos hover:text-gold transition-colors">info@montparnas.ru</a>
+            </div>
+          </div>
+          <button
+            onClick={() => onNavigate('enroll')}
+            className="btn-gold px-10 py-4 text-xs tracking-widest uppercase font-semibold font-golos"
+          >
+            Записаться на консультацию
           </button>
         </div>
       </section>

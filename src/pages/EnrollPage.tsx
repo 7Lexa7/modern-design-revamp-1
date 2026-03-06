@@ -1,244 +1,209 @@
 import { useState } from 'react';
 import Icon from '@/components/ui/icon';
 
-const steps = [
-  { num: 1, title: 'Выбери курс', desc: 'Из 8 направлений' },
-  { num: 2, title: 'Заполни заявку', desc: 'Займёт 2 минуты' },
-  { num: 3, title: 'Пробный урок', desc: 'Бесплатно' },
-  { num: 4, title: 'Стань студентом', desc: 'Добро пожаловать!' },
-];
-
-const courseOptions = [
-  'Масляная живопись', 'Акварель', 'Портретная фотография', 'Уличная фотография',
-  'Графический дизайн', 'Скульптура из глины', 'Рисунок для детей', 'Цифровая иллюстрация',
+const courses = [
+  'Базовый курс актёрского мастерства',
+  'Продвинутый курс актёрского мастерства',
+  'Школа Юного Актёра',
+  'Мастер-курс Родиона Овчинникова',
+  '«Актёрский интенсив» по методу Ли Страсберга',
+  'Авторский тренинг Александра Рапопорта',
+  'Подготовка в театральные ВУЗы',
+  'Мастер-курс Данилы Дунаева',
+  'Звёздный мастер-класс',
 ];
 
 export default function EnrollPage() {
-  const [submitted, setSubmitted] = useState(false);
-  const [form, setForm] = useState({
-    name: '', phone: '', email: '', course: '', level: '', message: '',
-  });
+  const [form, setForm] = useState({ name: '', phone: '', email: '', course: '', message: '' });
+  const [sent, setSent] = useState(false);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    setSubmitted(true);
+    setSent(true);
   };
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
-    setForm(prev => ({ ...prev, [e.target.name]: e.target.value }));
-  };
-
-  if (submitted) {
-    return (
-      <div className="min-h-screen pt-24 flex items-center justify-center">
-        <div className="text-center max-w-md mx-auto px-6">
-          <div className="w-20 h-20 rounded-full bg-gold/10 border border-gold/30 flex items-center justify-center mx-auto mb-6 animate-scale-in">
-            <Icon name="CheckCircle" size={40} className="text-gold" />
-          </div>
-          <h2 className="font-cormorant text-4xl font-light mb-4 animate-fade-in">
-            Заявка отправлена!
-          </h2>
-          <p className="font-golos text-muted-foreground leading-relaxed animate-fade-in animate-delay-100">
-            Мы свяжемся с тобой в ближайшее время и договоримся о пробном занятии. Добро пожаловать в Монпарнас!
-          </p>
-          <div className="mt-6 p-4 card-glass rounded-xl text-sm font-golos text-muted-foreground">
-            <span className="text-gold">📞</span> Если хочешь связаться сейчас: <a href="tel:+74951234567" className="text-gold hover:underline">+7 (495) 123-45-67</a>
-          </div>
-        </div>
-      </div>
-    );
-  }
 
   return (
-    <div className="min-h-screen pt-24 pb-24">
-      <div className="max-w-6xl mx-auto px-6">
-
-        <div className="text-center mb-4">
-          <span className="text-gold text-xs font-golos tracking-widest uppercase">Запись</span>
+    <div className="pt-24 pb-20">
+      {/* HEADER */}
+      <section className="py-16 px-6 text-center">
+        <div className="flex items-center justify-center gap-4 mb-8">
+          <div className="h-px w-8 bg-gold/40" />
+          <span className="text-gold/60 text-[10px] tracking-[0.4em] uppercase font-golos">Запись</span>
+          <div className="h-px w-8 bg-gold/40" />
         </div>
-        <h1 className="font-cormorant text-6xl md:text-7xl font-light text-center mb-4">
-          Стать <span className="text-gradient-gold italic">студентом</span>
+        <h1 className="font-playfair text-5xl md:text-6xl font-bold text-foreground mb-4">
+          Записаться<br />
+          <span className="italic text-gradient-gold">на курс</span>
         </h1>
-        <p className="font-golos text-muted-foreground text-center max-w-xl mx-auto mb-16">
-          Первое занятие — бесплатно и ни к чему не обязывает. Просто приходи и попробуй.
+        <p className="text-muted-foreground max-w-xl mx-auto font-golos">
+          Оставьте заявку — мы свяжемся с вами в течение рабочего дня и ответим на все вопросы.
         </p>
+      </section>
 
-        {/* Steps */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-16">
-          {steps.map((s, i) => (
-            <div key={i} className="text-center">
-              <div className="w-12 h-12 rounded-full bg-gold/10 border border-gold/30 flex items-center justify-center mx-auto mb-3 font-cormorant text-xl font-semibold text-gold">
-                {s.num}
+      <div className="max-w-5xl mx-auto px-6 grid md:grid-cols-2 gap-12">
+        {/* ФОРМА */}
+        <div>
+          {sent ? (
+            <div className="border border-gold/30 p-10 text-center h-full flex flex-col items-center justify-center gap-6">
+              <div className="w-16 h-16 border border-gold/40 flex items-center justify-center text-gold">
+                <Icon name="CheckCircle" size={28} />
               </div>
-              {i < steps.length - 1 && (
-                <div className="hidden md:block absolute mt-6 ml-24 w-full h-px bg-gradient-to-r from-gold/30 to-transparent" />
-              )}
-              <div className="font-golos font-semibold text-sm text-foreground mb-1">{s.title}</div>
-              <div className="font-golos text-xs text-muted-foreground">{s.desc}</div>
+              <div>
+                <h3 className="font-playfair text-2xl font-bold text-foreground mb-3">Заявка отправлена</h3>
+                <p className="text-muted-foreground font-golos text-sm leading-relaxed">
+                  Мы получили вашу заявку и свяжемся с вами в ближайшее время.
+                  Ждите звонка или письма на указанный email.
+                </p>
+              </div>
+              <button
+                onClick={() => setSent(false)}
+                className="btn-outline-gold px-6 py-2.5 text-xs tracking-widest uppercase font-golos"
+              >
+                Отправить ещё
+              </button>
             </div>
-          ))}
+          ) : (
+            <form onSubmit={handleSubmit} className="space-y-5">
+              <div>
+                <label className="text-[10px] tracking-[0.25em] uppercase text-muted-foreground font-golos block mb-2">
+                  Ваше имя *
+                </label>
+                <input
+                  type="text"
+                  required
+                  value={form.name}
+                  onChange={e => setForm({ ...form, name: e.target.value })}
+                  placeholder="Иван Иванов"
+                  className="w-full bg-transparent border border-gold/20 px-4 py-3 text-foreground font-golos text-sm focus:outline-none focus:border-gold/50 transition-colors placeholder:text-muted-foreground/40"
+                />
+              </div>
+              <div>
+                <label className="text-[10px] tracking-[0.25em] uppercase text-muted-foreground font-golos block mb-2">
+                  Телефон *
+                </label>
+                <input
+                  type="tel"
+                  required
+                  value={form.phone}
+                  onChange={e => setForm({ ...form, phone: e.target.value })}
+                  placeholder="+7 (___) ___-__-__"
+                  className="w-full bg-transparent border border-gold/20 px-4 py-3 text-foreground font-golos text-sm focus:outline-none focus:border-gold/50 transition-colors placeholder:text-muted-foreground/40"
+                />
+              </div>
+              <div>
+                <label className="text-[10px] tracking-[0.25em] uppercase text-muted-foreground font-golos block mb-2">
+                  Эл. почта
+                </label>
+                <input
+                  type="email"
+                  value={form.email}
+                  onChange={e => setForm({ ...form, email: e.target.value })}
+                  placeholder="example@mail.ru"
+                  className="w-full bg-transparent border border-gold/20 px-4 py-3 text-foreground font-golos text-sm focus:outline-none focus:border-gold/50 transition-colors placeholder:text-muted-foreground/40"
+                />
+              </div>
+              <div>
+                <label className="text-[10px] tracking-[0.25em] uppercase text-muted-foreground font-golos block mb-2">
+                  Интересующий курс
+                </label>
+                <select
+                  value={form.course}
+                  onChange={e => setForm({ ...form, course: e.target.value })}
+                  className="w-full bg-background border border-gold/20 px-4 py-3 text-foreground font-golos text-sm focus:outline-none focus:border-gold/50 transition-colors"
+                >
+                  <option value="" className="bg-background text-muted-foreground">Выберите курс...</option>
+                  {courses.map(c => (
+                    <option key={c} value={c} className="bg-background">{c}</option>
+                  ))}
+                </select>
+              </div>
+              <div>
+                <label className="text-[10px] tracking-[0.25em] uppercase text-muted-foreground font-golos block mb-2">
+                  Комментарий
+                </label>
+                <textarea
+                  value={form.message}
+                  onChange={e => setForm({ ...form, message: e.target.value })}
+                  rows={3}
+                  placeholder="Расскажите о своём опыте и целях..."
+                  className="w-full bg-transparent border border-gold/20 px-4 py-3 text-foreground font-golos text-sm focus:outline-none focus:border-gold/50 transition-colors placeholder:text-muted-foreground/40 resize-none"
+                />
+              </div>
+              <button
+                type="submit"
+                className="btn-gold w-full py-4 text-xs tracking-widest uppercase font-semibold font-golos"
+              >
+                Отправить заявку
+              </button>
+              <p className="text-muted-foreground/40 text-[10px] font-golos text-center leading-relaxed">
+                Нажимая кнопку, вы соглашаетесь на обработку персональных данных
+              </p>
+            </form>
+          )}
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-5 gap-10">
-          
-          {/* Form */}
-          <div className="lg:col-span-3">
-            <div className="card-glass rounded-3xl p-8">
-              <h2 className="font-cormorant text-3xl font-light mb-6 text-foreground">Заявка на обучение</h2>
-              <form onSubmit={handleSubmit} className="space-y-5">
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <div>
-                    <label className="block text-xs font-golos text-muted-foreground mb-1.5 tracking-wide">Имя *</label>
-                    <input
-                      type="text"
-                      name="name"
-                      required
-                      value={form.name}
-                      onChange={handleChange}
-                      placeholder="Ваше имя"
-                      className="w-full bg-muted border border-border rounded-xl px-4 py-3 font-golos text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-gold/50 focus:ring-1 focus:ring-gold/30 transition-all"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-xs font-golos text-muted-foreground mb-1.5 tracking-wide">Телефон *</label>
-                    <input
-                      type="tel"
-                      name="phone"
-                      required
-                      value={form.phone}
-                      onChange={handleChange}
-                      placeholder="+7 (___) ___-__-__"
-                      className="w-full bg-muted border border-border rounded-xl px-4 py-3 font-golos text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-gold/50 focus:ring-1 focus:ring-gold/30 transition-all"
-                    />
-                  </div>
+        {/* КОНТАКТЫ */}
+        <div className="space-y-6">
+          <div className="border border-gold/15 p-7">
+            <h3 className="font-playfair text-2xl font-bold text-foreground mb-6">Контакты</h3>
+            <div className="space-y-5">
+              <div className="flex gap-4 items-start">
+                <div className="w-8 h-8 border border-gold/30 flex items-center justify-center text-gold flex-shrink-0">
+                  <Icon name="MapPin" size={15} />
                 </div>
-
                 <div>
-                  <label className="block text-xs font-golos text-muted-foreground mb-1.5 tracking-wide">Email</label>
-                  <input
-                    type="email"
-                    name="email"
-                    value={form.email}
-                    onChange={handleChange}
-                    placeholder="your@email.com"
-                    className="w-full bg-muted border border-border rounded-xl px-4 py-3 font-golos text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-gold/50 focus:ring-1 focus:ring-gold/30 transition-all"
-                  />
+                  <div className="text-[10px] tracking-[0.25em] uppercase text-muted-foreground font-golos mb-1">Адрес</div>
+                  <div className="text-foreground text-sm font-golos">г. Москва, ул. Малая Лубянка, дом 16</div>
                 </div>
-
+              </div>
+              <div className="flex gap-4 items-start">
+                <div className="w-8 h-8 border border-gold/30 flex items-center justify-center text-gold flex-shrink-0">
+                  <Icon name="Phone" size={15} />
+                </div>
                 <div>
-                  <label className="block text-xs font-golos text-muted-foreground mb-1.5 tracking-wide">Интересующий курс</label>
-                  <select
-                    name="course"
-                    value={form.course}
-                    onChange={handleChange}
-                    className="w-full bg-muted border border-border rounded-xl px-4 py-3 font-golos text-sm text-foreground focus:outline-none focus:border-gold/50 focus:ring-1 focus:ring-gold/30 transition-all"
-                  >
-                    <option value="">Выберите курс</option>
-                    {courseOptions.map((c) => (
-                      <option key={c} value={c}>{c}</option>
-                    ))}
-                  </select>
+                  <div className="text-[10px] tracking-[0.25em] uppercase text-muted-foreground font-golos mb-1">Телефон</div>
+                  <a href="tel:+79153279755" className="text-foreground text-sm font-golos hover:text-gold transition-colors">
+                    +7 (915) 327-97-55
+                  </a>
                 </div>
-
+              </div>
+              <div className="flex gap-4 items-start">
+                <div className="w-8 h-8 border border-gold/30 flex items-center justify-center text-gold flex-shrink-0">
+                  <Icon name="Mail" size={15} />
+                </div>
                 <div>
-                  <label className="block text-xs font-golos text-muted-foreground mb-1.5 tracking-wide">Ваш уровень</label>
-                  <div className="grid grid-cols-3 gap-2">
-                    {['С нуля', 'Начинающий', 'Есть опыт'].map((level) => (
-                      <button
-                        key={level}
-                        type="button"
-                        onClick={() => setForm(prev => ({ ...prev, level }))}
-                        className={`py-2 rounded-xl font-golos text-xs border transition-all ${
-                          form.level === level
-                            ? 'border-gold bg-gold/10 text-gold'
-                            : 'border-border text-muted-foreground hover:border-gold/30'
-                        }`}
-                      >
-                        {level}
-                      </button>
-                    ))}
-                  </div>
+                  <div className="text-[10px] tracking-[0.25em] uppercase text-muted-foreground font-golos mb-1">Эл. почта</div>
+                  <a href="mailto:info@montparnas.ru" className="text-foreground text-sm font-golos hover:text-gold transition-colors">
+                    info@montparnas.ru
+                  </a>
                 </div>
-
-                <div>
-                  <label className="block text-xs font-golos text-muted-foreground mb-1.5 tracking-wide">Комментарий</label>
-                  <textarea
-                    name="message"
-                    value={form.message}
-                    onChange={handleChange}
-                    rows={3}
-                    placeholder="Расскажите о себе или задайте вопрос..."
-                    className="w-full bg-muted border border-border rounded-xl px-4 py-3 font-golos text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-gold/50 focus:ring-1 focus:ring-gold/30 transition-all resize-none"
-                  />
-                </div>
-
-                <button type="submit" className="btn-gold w-full py-4 rounded-xl font-golos font-semibold text-sm tracking-wide flex items-center justify-center gap-2">
-                  Отправить заявку
-                  <Icon name="Send" size={15} />
-                </button>
-
-                <p className="font-golos text-xs text-muted-foreground text-center">
-                  Нажимая кнопку, вы соглашаетесь с обработкой персональных данных
-                </p>
-              </form>
+              </div>
             </div>
           </div>
 
-          {/* Info */}
-          <div className="lg:col-span-2 space-y-5">
-            <div className="card-glass rounded-2xl p-6">
-              <h3 className="font-cormorant text-xl font-semibold mb-4">Контакты</h3>
-              <div className="space-y-4">
-                <div className="flex items-start gap-3">
-                  <Icon name="MapPin" size={16} className="text-gold mt-0.5 shrink-0" />
-                  <div>
-                    <div className="font-golos text-sm text-foreground">Адрес</div>
-                    <div className="font-golos text-xs text-muted-foreground">Москва, ул. Тверская, 18</div>
-                  </div>
+          <div className="border border-gold/15 p-7">
+            <h3 className="font-playfair text-xl font-semibold text-foreground mb-5">Почему Montparnas?</h3>
+            <div className="space-y-4">
+              {[
+                { icon: 'GraduationCap', text: 'Педагоги МХАТ, Щукинского, ВГИК, ГИТИС' },
+                { icon: 'Users', text: '300+ выпускников за 10+ лет работы' },
+                { icon: 'Film', text: 'Реальные навыки для кино и телевидения' },
+                { icon: 'Heart', text: 'Творческая атмосфера единомышленников' },
+              ].map((item, i) => (
+                <div key={i} className="flex gap-3 items-center">
+                  <Icon name={item.icon} size={16} className="text-gold flex-shrink-0" />
+                  <span className="text-muted-foreground text-sm font-golos">{item.text}</span>
                 </div>
-                <div className="flex items-start gap-3">
-                  <Icon name="Phone" size={16} className="text-gold mt-0.5 shrink-0" />
-                  <div>
-                    <div className="font-golos text-sm text-foreground">Телефон</div>
-                    <a href="tel:+74951234567" className="font-golos text-xs text-gold hover:underline">+7 (495) 123-45-67</a>
-                  </div>
-                </div>
-                <div className="flex items-start gap-3">
-                  <Icon name="Mail" size={16} className="text-gold mt-0.5 shrink-0" />
-                  <div>
-                    <div className="font-golos text-sm text-foreground">Email</div>
-                    <a href="mailto:info@montparnas.ru" className="font-golos text-xs text-gold hover:underline">info@montparnas.ru</a>
-                  </div>
-                </div>
-                <div className="flex items-start gap-3">
-                  <Icon name="Clock" size={16} className="text-gold mt-0.5 shrink-0" />
-                  <div>
-                    <div className="font-golos text-sm text-foreground">Режим работы</div>
-                    <div className="font-golos text-xs text-muted-foreground">Пн–Пт: 10:00–21:00</div>
-                    <div className="font-golos text-xs text-muted-foreground">Сб–Вс: 10:00–18:00</div>
-                  </div>
-                </div>
-              </div>
+              ))}
             </div>
+          </div>
 
-            <div className="card-glass rounded-2xl p-6">
-              <h3 className="font-cormorant text-xl font-semibold mb-4">Почему Монпарнас?</h3>
-              <div className="space-y-3">
-                {[
-                  'Первое занятие бесплатно',
-                  'Профессиональное оборудование',
-                  'Группы по 6–8 человек',
-                  'Материалы включены в стоимость',
-                  'Гибкое расписание',
-                  'Выставки и мероприятия для студентов',
-                ].map((item, i) => (
-                  <div key={i} className="flex items-center gap-2.5">
-                    <Icon name="Check" size={14} className="text-gold shrink-0" />
-                    <span className="font-golos text-sm text-muted-foreground">{item}</span>
-                  </div>
-                ))}
-              </div>
-            </div>
+          <div className="bg-gold/5 border border-gold/20 p-6">
+            <p className="text-muted-foreground text-sm font-golos italic leading-relaxed">
+              «Мы верим, что каждый человек обладает актёрским даром.
+              Наша задача — помочь его раскрыть»
+            </p>
+            <div className="text-gold/50 text-xs font-golos mt-3">— Команда Montparnas</div>
           </div>
         </div>
       </div>
