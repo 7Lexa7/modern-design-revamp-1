@@ -1,18 +1,20 @@
 import { useState } from 'react';
 import Icon from '@/components/ui/icon';
 
+const HERO_IMG = 'https://cdn.poehali.dev/projects/f836a67a-a8be-4af0-8a66-d2f5ea2f50dd/files/7518d156-258b-4fc6-affa-7fb8a437df12.jpg';
+
 const galleryItems = [
-  { id: 1, type: 'photo', category: 'Живопись', title: 'Мастерская', src: 'https://cdn.poehali.dev/projects/f836a67a-a8be-4af0-8a66-d2f5ea2f50dd/files/3807cb5c-23d4-4b8d-a09a-5b6357811973.jpg', span: 'col-span-2 row-span-2' },
-  { id: 2, type: 'photo', category: 'Студенты', title: 'Наши студенты', src: 'https://cdn.poehali.dev/projects/f836a67a-a8be-4af0-8a66-d2f5ea2f50dd/files/ca1594a0-45ec-4c4a-82fc-ef5c97388d32.jpg', span: '' },
-  { id: 3, type: 'photo', category: 'Курсы', title: 'Арт-курсы', src: 'https://cdn.poehali.dev/projects/f836a67a-a8be-4af0-8a66-d2f5ea2f50dd/files/77bdee64-d408-4406-95c7-a55e5044f1ed.jpg', span: '' },
-  { id: 4, type: 'photo', category: 'Живопись', title: 'Техника масла', src: 'https://cdn.poehali.dev/projects/f836a67a-a8be-4af0-8a66-d2f5ea2f50dd/files/77bdee64-d408-4406-95c7-a55e5044f1ed.jpg', span: '' },
-  { id: 5, type: 'photo', category: 'Студенты', title: 'Творческая атмосфера', src: 'https://cdn.poehali.dev/projects/f836a67a-a8be-4af0-8a66-d2f5ea2f50dd/files/ca1594a0-45ec-4c4a-82fc-ef5c97388d32.jpg', span: 'col-span-2' },
-  { id: 6, type: 'video', category: 'Видео', title: 'О школе', src: 'https://cdn.poehali.dev/projects/f836a67a-a8be-4af0-8a66-d2f5ea2f50dd/files/3807cb5c-23d4-4b8d-a09a-5b6357811973.jpg', span: '' },
-  { id: 7, type: 'photo', category: 'Курсы', title: 'Фотокурс', src: 'https://cdn.poehali.dev/projects/f836a67a-a8be-4af0-8a66-d2f5ea2f50dd/files/3807cb5c-23d4-4b8d-a09a-5b6357811973.jpg', span: '' },
-  { id: 8, type: 'photo', category: 'Живопись', title: 'Акварель', src: 'https://cdn.poehali.dev/projects/f836a67a-a8be-4af0-8a66-d2f5ea2f50dd/files/77bdee64-d408-4406-95c7-a55e5044f1ed.jpg', span: '' },
+  { id: 1, type: 'photo', category: 'Академия', title: 'Занятия в академии', src: HERO_IMG, span: 'col-span-2 row-span-2' },
+  { id: 2, type: 'photo', category: 'Студенты', title: 'Наши студенты', src: HERO_IMG, span: '' },
+  { id: 3, type: 'photo', category: 'Мастер-курсы', title: 'Мастер-класс', src: HERO_IMG, span: '' },
+  { id: 4, type: 'photo', category: 'Академия', title: 'Репетиция', src: HERO_IMG, span: '' },
+  { id: 5, type: 'photo', category: 'Студенты', title: 'Творческая атмосфера', src: HERO_IMG, span: 'col-span-2' },
+  { id: 6, type: 'video', category: 'Видео', title: 'О школе', src: HERO_IMG, span: '' },
+  { id: 7, type: 'photo', category: 'Мастер-курсы', title: 'Работа с режиссёром', src: HERO_IMG, span: '' },
+  { id: 8, type: 'photo', category: 'Академия', title: 'Сценическое движение', src: HERO_IMG, span: '' },
 ];
 
-const galleryCategories = ['Все', 'Живопись', 'Фотография', 'Студенты', 'Курсы', 'Видео'];
+const galleryCategories = ['Все', 'Академия', 'Студенты', 'Мастер-курсы', 'Видео'];
 
 export default function GalleryPage() {
   const [activeCategory, setActiveCategory] = useState('Все');
@@ -25,13 +27,13 @@ export default function GalleryPage() {
       <div className="max-w-7xl mx-auto px-6">
 
         <div className="text-center mb-4">
-          <span className="text-gold text-xs font-golos tracking-widest uppercase">Галерея</span>
+          <span className="text-gold text-xs font-golos tracking-widest uppercase">Атмосфера</span>
         </div>
-        <h1 className="font-cormorant text-6xl md:text-7xl font-light text-center mb-4">
-          Фото <span className="text-gradient-gold italic">&</span> видео
+        <h1 className="font-playfair text-5xl md:text-7xl font-light text-center mb-4">
+          Фото <span className="text-gradient-gold italic">&amp;</span> видео
         </h1>
         <p className="font-golos text-muted-foreground text-center max-w-xl mx-auto mb-12">
-          Жизнь школы в снимках — студии, занятия, выставки и наши студенты
+          Жизнь академии в снимках — занятия, мастер-классы, репетиции и наши студенты
         </p>
 
         {/* Filters */}
@@ -64,7 +66,7 @@ export default function GalleryPage() {
               />
               <div className="absolute inset-0 bg-gradient-to-t from-background/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-5">
                 <span className="text-xs font-golos text-gold mb-1">{item.category}</span>
-                <span className="font-cormorant text-lg text-foreground">{item.title}</span>
+                <span className="font-playfair text-lg text-foreground">{item.title}</span>
               </div>
               {item.type === 'video' && (
                 <div className="absolute inset-0 flex items-center justify-center">
@@ -101,9 +103,9 @@ export default function GalleryPage() {
         {/* YouTube section */}
         <div className="mt-16 card-glass rounded-3xl p-10 text-center">
           <Icon name="Youtube" size={40} className="text-gold mx-auto mb-4" />
-          <h2 className="font-cormorant text-3xl font-light mb-3">Смотри нас на YouTube</h2>
+          <h2 className="font-playfair text-3xl font-light mb-3">Смотри нас на YouTube</h2>
           <p className="font-golos text-muted-foreground mb-6 max-w-md mx-auto">
-            Уроки, мастер-классы и влоги о жизни школы — на нашем канале
+            Записи мастер-классов, отрывки из занятий и жизнь академии — на нашем канале
           </p>
           <a
             href="#"

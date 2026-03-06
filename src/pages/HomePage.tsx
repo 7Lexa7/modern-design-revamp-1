@@ -15,42 +15,42 @@ const stats = [
 ];
 
 const reasons = [
+  { icon: 'ShieldCheck', title: 'Избавиться от зажимов', desc: 'Научитесь владеть голосом, телом и пространством — без страха и скованности.' },
+  { icon: 'Mic', title: 'Публичные выступления', desc: 'Аудитория будет жадно ловить каждое ваше слово. Вы станете оратором.' },
+  { icon: 'Film', title: 'Работа в кино', desc: 'Начните сниматься в кино и на телевидении — мы даём реальные инструменты.' },
+  { icon: 'Users', title: 'Творческая среда', desc: 'Атмосфера профессионалов и единомышленников, которая вдохновляет каждый день.' },
+  { icon: 'Star', title: 'Отточить мастерство', desc: 'Для профессионалов — углублённые курсы и уникальные мастер-классы.' },
+  { icon: 'TrendingUp', title: 'Самореализация', desc: 'Раскройте таланты и получите дополнительные возможности в профессии.' },
+];
+
+const reviews = [
   {
-    icon: 'ShieldCheck',
-    title: 'Избавиться от зажимов',
-    desc: 'Научитесь владеть голосом, телом и пространством — без страха и скованности.',
+    name: 'Мария Соколова',
+    role: 'Базовый курс актёрского мастерства',
+    text: 'Пришла совершенно зажатой, боялась даже говорить на публике. После трёх месяцев в Монпарнасе выступаю перед аудиторией без страха. Педагоги — настоящие профессионалы!',
+    rating: 5,
+    avatar: 'М',
   },
   {
-    icon: 'Mic',
-    title: 'Публичные выступления',
-    desc: 'Аудитория будет жадно ловить каждое ваше слово. Вы станете оратором.',
+    name: 'Дмитрий Волков',
+    role: 'Мастер-курс Данилы Дунаева',
+    text: 'Уникальный опыт работы с настоящим мастером кино. После курса получил первую роль в сериале. Рекомендую всем, кто серьёзно хочет работать в кино.',
+    rating: 5,
+    avatar: 'Д',
   },
   {
-    icon: 'Film',
-    title: 'Работа в кино',
-    desc: 'Начните сниматься в кино и на телевидении — мы даём реальные инструменты.',
-  },
-  {
-    icon: 'Users',
-    title: 'Творческая среда',
-    desc: 'Атмосфера профессионалов и единомышленников, которая вдохновляет каждый день.',
-  },
-  {
-    icon: 'Star',
-    title: 'Отточить мастерство',
-    desc: 'Для профессионалов — углублённые курсы и уникальные мастер-классы.',
-  },
-  {
-    icon: 'TrendingUp',
-    title: 'Самореализация',
-    desc: 'Раскройте таланты и получите дополнительные возможности в профессии.',
+    name: 'Анна Кириллова',
+    role: 'Школа Юного Актёра',
+    text: 'Отдала дочь в Школу Юного Актёра — не узнаю ребёнка. Стала уверенной, раскованной, с удовольствием выступает на сцене. Спасибо команде Монпарнаса!',
+    rating: 5,
+    avatar: 'А',
   },
 ];
 
-const teachers = [
-  { name: 'Родион Овчинников', role: 'Мастер-курс', school: 'МХАТ' },
-  { name: 'Александр Рапопорт', role: 'Авторский тренинг', school: 'ВТУ им. Щукина' },
-  { name: 'Данила Дунаев', role: 'Мастер-курс', school: 'ВГИК' },
+const galleryPreviews = [
+  { src: HERO_IMG, title: 'Занятия в академии' },
+  { src: HERO_IMG, title: 'Мастер-классы' },
+  { src: HERO_IMG, title: 'Наши студенты' },
 ];
 
 export default function HomePage({ onNavigate }: HomePageProps) {
@@ -78,52 +78,38 @@ export default function HomePage({ onNavigate }: HomePageProps) {
             willChange: 'transform',
           }}
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/50 to-black" />
-        <div className="absolute inset-0 bg-gradient-to-r from-black/40 via-transparent to-black/40" />
-
-        {/* Film grain overlay */}
-        <div className="absolute inset-0 opacity-[0.03]" style={{
-          backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")`,
+        <div className="absolute inset-0 bg-gradient-to-b from-background/80 via-background/50 to-background" />
+        <div className="absolute inset-0" style={{
+          background: 'radial-gradient(ellipse at 20% 20%, rgba(123,79,166,0.15) 0%, transparent 60%), radial-gradient(ellipse at 80% 80%, rgba(212,168,83,0.1) 0%, transparent 60%)',
         }} />
 
-        <div className="relative z-10 text-center px-6 max-w-5xl mx-auto">
-          {/* Pre-title */}
-          <div className="flex items-center justify-center gap-4 mb-8 opacity-0 animate-fade-in" style={{ animationDelay: '0.2s' }}>
-            <div className="h-px w-12 bg-gold/50" />
-            <span className="text-gold/80 text-[10px] tracking-[0.4em] uppercase font-golos">
-              Москва · Малая Лубянка, 16
-            </span>
-            <div className="h-px w-12 bg-gold/50" />
+        <div className="relative z-10 text-center px-6 max-w-4xl mx-auto">
+          <div className="flex items-center justify-center gap-3 mb-6 opacity-0 animate-fade-in" style={{ animationDelay: '0.2s' }}>
+            <div className="h-px w-12 bg-gradient-to-r from-transparent to-gold/60" />
+            <span className="text-gold text-xs font-golos tracking-widest uppercase">Академия кино · Москва</span>
+            <div className="h-px w-12 bg-gradient-to-l from-transparent to-gold/60" />
           </div>
 
-          <h1 className="font-playfair text-6xl md:text-8xl lg:text-9xl font-bold text-white leading-none mb-2 opacity-0 animate-fade-in" style={{ animationDelay: '0.4s' }}>
-            Академия
-          </h1>
-          <h1 className="font-playfair text-6xl md:text-8xl lg:text-9xl font-bold italic text-gradient-gold leading-none mb-8 opacity-0 animate-fade-in" style={{ animationDelay: '0.55s' }}>
-            кино
+          <h1 className="font-playfair text-6xl md:text-8xl font-light text-foreground leading-tight mb-6 opacity-0 animate-fade-in" style={{ animationDelay: '0.4s' }}>
+            Академия кино<br />
+            <span className="text-gradient-gold italic font-semibold">Монпарнас</span>
           </h1>
 
-          <div className="flex items-center justify-center gap-3 mb-10 opacity-0 animate-fade-in" style={{ animationDelay: '0.7s' }}>
-            <span className="text-gold/60 text-2xl font-playfair italic">—</span>
-            <span className="font-playfair text-2xl md:text-3xl text-white/80 tracking-wider">Montparnas</span>
-            <span className="text-gold/60 text-2xl font-playfair italic">—</span>
-          </div>
-
-          <p className="text-white/60 text-base md:text-lg max-w-2xl mx-auto leading-relaxed mb-12 opacity-0 animate-fade-in font-golos" style={{ animationDelay: '0.85s' }}>
+          <p className="text-muted-foreground text-lg md:text-xl max-w-2xl mx-auto leading-relaxed mb-10 opacity-0 animate-fade-in font-golos" style={{ animationDelay: '0.65s' }}>
             Авторские методики педагогов МХАТ, Щукинского, ВГИК.<br />
             Интенсивная подготовка актёров для кино и телевидения.
           </p>
 
-          <div className="flex flex-col sm:flex-row gap-4 justify-center opacity-0 animate-fade-in" style={{ animationDelay: '1s' }}>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center opacity-0 animate-fade-in" style={{ animationDelay: '0.85s' }}>
             <button
               onClick={() => onNavigate('courses')}
-              className="btn-gold px-10 py-4 text-xs tracking-widest uppercase font-semibold font-golos"
+              className="btn-gold px-10 py-4 rounded-full font-golos font-semibold text-sm"
             >
               Выбрать курс
             </button>
             <button
               onClick={() => onNavigate('about')}
-              className="btn-outline-gold px-10 py-4 text-xs tracking-widest uppercase font-golos"
+              className="btn-outline-gold px-10 py-4 rounded-full font-golos text-sm"
             >
               Об академии
             </button>
@@ -131,36 +117,33 @@ export default function HomePage({ onNavigate }: HomePageProps) {
         </div>
 
         {/* Scroll indicator */}
-        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 opacity-50 animate-fade-in" style={{ animationDelay: '1.4s' }}>
-          <span className="text-[9px] tracking-[0.3em] uppercase text-white/50 font-golos">Scroll</span>
-          <div className="w-px h-12 bg-gradient-to-b from-gold/50 to-transparent" />
+        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 animate-fade-in" style={{ animationDelay: '1.3s' }}>
+          <div className="w-6 h-10 rounded-full border border-gold/30 flex items-start justify-center pt-1.5">
+            <div className="w-1 h-2 rounded-full bg-gold/60 animate-bounce" />
+          </div>
         </div>
       </section>
 
       {/* STATS */}
-      <section className="bg-black border-y border-gold/10 py-12">
+      <section className="py-12 border-y border-border/50">
         <div className="max-w-5xl mx-auto px-6 grid grid-cols-2 md:grid-cols-4 gap-8">
           {stats.map((s, i) => (
             <div key={i} className="text-center">
-              <div className="font-playfair text-4xl md:text-5xl font-bold text-gradient-gold mb-1">{s.value}</div>
-              <div className="text-white/40 text-xs tracking-widest uppercase font-golos">{s.label}</div>
+              <div className="font-playfair text-4xl md:text-5xl font-light text-gradient-gold mb-1">{s.value}</div>
+              <div className="text-muted-foreground text-xs font-golos tracking-wider">{s.label}</div>
             </div>
           ))}
         </div>
       </section>
 
-      {/* ЗАЧЕМ */}
-      <section className="py-28 px-6 bg-background">
+      {/* ДЛЯ КОГО */}
+      <section className="py-24 px-6">
         <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-20">
-            <div className="flex items-center justify-center gap-4 mb-6">
-              <div className="h-px w-8 bg-gold/40" />
-              <span className="text-gold/60 text-[10px] tracking-[0.4em] uppercase font-golos">Для кого</span>
-              <div className="h-px w-8 bg-gold/40" />
-            </div>
-            <h2 className="font-playfair text-4xl md:text-5xl font-bold text-foreground mb-4">
+          <div className="text-center mb-16">
+            <span className="text-gold text-xs font-golos tracking-widest uppercase">Для кого</span>
+            <h2 className="font-playfair text-4xl md:text-5xl font-light text-foreground mt-3 mb-4">
               Академия открыта для всех,<br />
-              <span className="italic text-gradient-gold">кто готов меняться</span>
+              <span className="text-gradient-gold italic">кто готов меняться</span>
             </h2>
             <p className="text-muted-foreground max-w-xl mx-auto font-golos">
               Наша программа ориентирована не только на профессионалов —
@@ -168,16 +151,13 @@ export default function HomePage({ onNavigate }: HomePageProps) {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
             {reasons.map((r, i) => (
-              <div
-                key={i}
-                className="card-glass card-glow p-8 transition-all duration-500 group"
-              >
-                <div className="w-10 h-10 border border-gold/30 flex items-center justify-center text-gold mb-6 group-hover:bg-gold group-hover:text-black transition-all duration-300">
-                  <Icon name={r.icon} size={18} />
+              <div key={i} className="card-glass card-glow rounded-2xl p-7 transition-all duration-500 group">
+                <div className="w-11 h-11 rounded-xl bg-gold/10 border border-gold/20 flex items-center justify-center text-gold mb-5 group-hover:bg-gold group-hover:text-background transition-all duration-300">
+                  <Icon name={r.icon} size={20} />
                 </div>
-                <h3 className="font-playfair text-xl font-semibold text-foreground mb-3">{r.title}</h3>
+                <h3 className="font-playfair text-xl font-medium text-foreground mb-2">{r.title}</h3>
                 <p className="text-muted-foreground text-sm leading-relaxed font-golos">{r.desc}</p>
               </div>
             ))}
@@ -185,80 +165,191 @@ export default function HomePage({ onNavigate }: HomePageProps) {
         </div>
       </section>
 
-      {/* ПЕДАГОГИ */}
-      <section className="py-24 px-6 bg-black/40">
-        <div className="max-w-5xl mx-auto">
-          <div className="text-center mb-16">
-            <div className="flex items-center justify-center gap-4 mb-6">
-              <div className="h-px w-8 bg-gold/40" />
-              <span className="text-gold/60 text-[10px] tracking-[0.4em] uppercase font-golos">Преподаватели</span>
-              <div className="h-px w-8 bg-gold/40" />
+      {/* ГАЛЕРЕЯ — превью */}
+      <section className="py-16 px-6 bg-muted/30">
+        <div className="max-w-6xl mx-auto">
+          <div className="flex items-end justify-between mb-10">
+            <div>
+              <span className="text-gold text-xs font-golos tracking-widest uppercase">Атмосфера</span>
+              <h2 className="font-playfair text-3xl md:text-4xl font-light text-foreground mt-2">
+                Жизнь <span className="text-gradient-gold italic">академии</span>
+              </h2>
             </div>
-            <h2 className="font-playfair text-4xl md:text-5xl font-bold text-foreground">
-              Высококлассные педагоги<br />
-              <span className="italic text-gradient-gold">театральных ВУЗов Москвы</span>
-            </h2>
+            <button
+              onClick={() => onNavigate('gallery')}
+              className="btn-outline-gold px-6 py-2.5 rounded-full font-golos text-sm hidden md:flex items-center gap-2"
+            >
+              Все фото <Icon name="ArrowRight" size={14} />
+            </button>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
-            {teachers.map((t, i) => (
-              <div key={i} className="border border-gold/15 p-8 hover:border-gold/30 transition-all duration-300 group text-center">
-                <div className="w-16 h-16 border border-gold/20 flex items-center justify-center mx-auto mb-5 group-hover:border-gold/50 transition-all">
-                  <Icon name="User" size={24} className="text-gold/40" />
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+            {galleryPreviews.map((item, i) => (
+              <div
+                key={i}
+                className={`relative rounded-2xl overflow-hidden cursor-pointer group ${i === 0 ? 'md:row-span-2 h-64 md:h-auto' : 'h-44'}`}
+                onClick={() => onNavigate('gallery')}
+              >
+                <img
+                  src={item.src}
+                  alt={item.title}
+                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-background/70 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-300 flex items-end p-5">
+                  <span className="font-playfair text-foreground text-lg">{item.title}</span>
                 </div>
-                <div className="text-[9px] tracking-[0.3em] uppercase text-gold/50 font-golos mb-2">{t.school}</div>
-                <h3 className="font-playfair text-lg font-semibold text-foreground mb-1">{t.name}</h3>
-                <p className="text-muted-foreground text-xs font-golos">{t.role}</p>
               </div>
             ))}
           </div>
 
-          <p className="text-center text-muted-foreground/60 text-sm font-golos italic">
-            А также педагоги ВТУ им. Вахтангова, ГИТИС и других ведущих театральных школ
-          </p>
+          <div className="text-center md:hidden">
+            <button
+              onClick={() => onNavigate('gallery')}
+              className="btn-outline-gold px-8 py-3 rounded-full font-golos text-sm"
+            >
+              Смотреть все фото
+            </button>
+          </div>
+        </div>
+      </section>
+
+      {/* ОТЗЫВЫ */}
+      <section className="py-24 px-6">
+        <div className="max-w-6xl mx-auto">
+          <div className="text-center mb-14">
+            <span className="text-gold text-xs font-golos tracking-widest uppercase">Отзывы</span>
+            <h2 className="font-playfair text-4xl md:text-5xl font-light text-foreground mt-3">
+              Говорят наши <span className="text-gradient-gold italic">студенты</span>
+            </h2>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {reviews.map((r, i) => (
+              <div key={i} className="card-glass card-glow rounded-2xl p-7 flex flex-col">
+                {/* Stars */}
+                <div className="flex gap-1 mb-5">
+                  {Array.from({ length: r.rating }).map((_, j) => (
+                    <Icon key={j} name="Star" size={14} className="text-gold fill-gold" />
+                  ))}
+                </div>
+                <p className="text-muted-foreground text-sm leading-relaxed font-golos flex-grow mb-6 italic">
+                  «{r.text}»
+                </p>
+                <div className="flex items-center gap-3 pt-5 border-t border-border/50">
+                  <div className="w-10 h-10 rounded-full bg-gradient-to-br from-gold to-gold-dark flex items-center justify-center text-background font-playfair font-bold">
+                    {r.avatar}
+                  </div>
+                  <div>
+                    <p className="font-golos font-semibold text-sm text-foreground">{r.name}</p>
+                    <p className="font-golos text-xs text-gold">{r.role}</p>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
       </section>
 
       {/* CTA */}
-      <section className="py-28 px-6 bg-background">
-        <div className="max-w-3xl mx-auto text-center">
-          <h2 className="font-playfair text-4xl md:text-5xl font-bold text-foreground mb-6">
-            Начните свой путь<br />
-            <span className="italic text-gradient-gold">в кино сегодня</span>
-          </h2>
-          <p className="text-muted-foreground mb-10 font-golos leading-relaxed">
-            Запишитесь на бесплатную консультацию и узнайте, какой курс подойдёт именно вам.
-            Мы находимся в Москве, ул. Малая Лубянка, дом 16.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <button
-              onClick={() => onNavigate('enroll')}
-              className="btn-gold px-10 py-4 text-xs tracking-widest uppercase font-semibold font-golos"
-            >
-              Записаться на курс
-            </button>
-            <a
-              href="tel:+79153279755"
-              className="btn-outline-gold px-10 py-4 text-xs tracking-widest uppercase font-golos flex items-center justify-center gap-2"
-            >
-              <Icon name="Phone" size={14} />
-              +7 (915) 327-97-55
-            </a>
+      <section className="py-24 px-6">
+        <div className="max-w-4xl mx-auto">
+          <div className="card-glass rounded-3xl p-12 md:p-16 text-center relative overflow-hidden">
+            <div className="absolute inset-0 opacity-5" style={{
+              background: 'radial-gradient(ellipse at center, rgba(212,168,83,0.4) 0%, transparent 70%)',
+            }} />
+            <div className="relative z-10">
+              <span className="text-gold text-xs font-golos tracking-widest uppercase mb-4 block">Первое занятие бесплатно</span>
+              <h2 className="font-playfair text-4xl md:text-5xl font-light text-foreground mb-4">
+                Готов начать своё<br />
+                <span className="text-gradient-gold italic font-semibold">путешествие?</span>
+              </h2>
+              <p className="text-muted-foreground font-golos mb-10 max-w-lg mx-auto leading-relaxed text-lg">
+                Первое занятие — бесплатно. Приходи и почувствуй атмосферу Монпарнаса.
+              </p>
+              <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                <button
+                  onClick={() => onNavigate('enroll')}
+                  className="btn-gold px-10 py-4 rounded-full font-golos font-semibold text-sm"
+                >
+                  Записаться бесплатно
+                </button>
+                <a
+                  href="tel:+79153279755"
+                  className="btn-outline-gold px-10 py-4 rounded-full font-golos text-sm flex items-center justify-center gap-2"
+                >
+                  <Icon name="Phone" size={15} />
+                  Позвонить нам
+                </a>
+              </div>
+            </div>
           </div>
         </div>
       </section>
 
       {/* FOOTER */}
-      <footer className="border-t border-gold/10 py-12 px-6 bg-black">
-        <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
-          <div>
-            <div className="font-playfair font-bold text-gold text-lg tracking-widest uppercase mb-1">Montparnas</div>
-            <div className="text-white/30 text-xs font-golos">Академия кино · Москва</div>
+      <footer className="border-t border-border/50 py-16 px-6">
+        <div className="max-w-6xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-10 mb-12">
+            {/* Brand */}
+            <div className="md:col-span-2">
+              <div className="flex items-center gap-3 mb-4">
+                <div className="w-9 h-9 rounded-full bg-gradient-to-br from-gold to-gold-dark flex items-center justify-center shadow-md shadow-gold/20">
+                  <span className="text-background font-playfair font-bold text-lg leading-none">М</span>
+                </div>
+                <span className="font-playfair font-semibold text-xl tracking-widest text-foreground">МОНПАРНАС</span>
+              </div>
+              <p className="text-muted-foreground text-sm font-golos leading-relaxed max-w-xs mb-5">
+                Академия кино — авторские методики, педагоги ведущих театральных ВУЗов Москвы, 10+ лет опыта.
+              </p>
+              <div className="flex gap-3">
+                <a href="#" className="w-9 h-9 rounded-full border border-border flex items-center justify-center text-muted-foreground hover:text-gold hover:border-gold/40 transition-all">
+                  <Icon name="Instagram" size={16} />
+                </a>
+                <a href="#" className="w-9 h-9 rounded-full border border-border flex items-center justify-center text-muted-foreground hover:text-gold hover:border-gold/40 transition-all">
+                  <Icon name="Youtube" size={16} />
+                </a>
+                <a href="#" className="w-9 h-9 rounded-full border border-border flex items-center justify-center text-muted-foreground hover:text-gold hover:border-gold/40 transition-all">
+                  <Icon name="MessageCircle" size={16} />
+                </a>
+              </div>
+            </div>
+
+            {/* Курсы */}
+            <div>
+              <h4 className="font-golos font-semibold text-foreground text-sm mb-4 tracking-wider">Курсы</h4>
+              <ul className="space-y-2.5 font-golos text-sm text-muted-foreground">
+                {['Базовый курс', 'Продвинутый курс', 'Школа Юного Актёра', 'Мастер-курсы', 'Подготовка в ВУЗы'].map(c => (
+                  <li key={c}>
+                    <button onClick={() => onNavigate('courses')} className="hover:text-gold transition-colors text-left">{c}</button>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            {/* Контакты */}
+            <div>
+              <h4 className="font-golos font-semibold text-foreground text-sm mb-4 tracking-wider">Контакты</h4>
+              <ul className="space-y-3 font-golos text-sm text-muted-foreground">
+                <li className="flex items-start gap-2">
+                  <Icon name="MapPin" size={14} className="text-gold mt-0.5 shrink-0" />
+                  г. Москва, ул. Малая Лубянка, д. 16
+                </li>
+                <li className="flex items-center gap-2">
+                  <Icon name="Phone" size={14} className="text-gold shrink-0" />
+                  <a href="tel:+79153279755" className="hover:text-gold transition-colors">+7 (915) 327-97-55</a>
+                </li>
+                <li className="flex items-center gap-2">
+                  <Icon name="Mail" size={14} className="text-gold shrink-0" />
+                  <a href="mailto:info@montparnas.ru" className="hover:text-gold transition-colors">info@montparnas.ru</a>
+                </li>
+              </ul>
+            </div>
           </div>
-          <div className="flex flex-col items-center md:items-end gap-1">
-            <a href="mailto:info@montparnas.ru" className="text-white/40 hover:text-gold transition-colors text-sm font-golos">info@montparnas.ru</a>
-            <a href="tel:+79153279755" className="text-white/40 hover:text-gold transition-colors text-sm font-golos">+7 (915) 327-97-55</a>
-            <div className="text-white/25 text-xs font-golos">ул. Малая Лубянка, дом 16</div>
+
+          <div className="section-divider mb-6" />
+          <div className="flex flex-col md:flex-row items-center justify-between gap-3">
+            <p className="text-muted-foreground text-xs font-golos">© 2025 Академия кино Монпарнас. Все права защищены.</p>
+            <p className="text-muted-foreground/50 text-xs font-golos">г. Москва · Малая Лубянка, 16</p>
           </div>
         </div>
       </footer>

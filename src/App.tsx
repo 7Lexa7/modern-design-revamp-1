@@ -3,11 +3,12 @@ import Navbar from '@/components/Navbar';
 import HomePage from '@/pages/HomePage';
 import AboutPage from '@/pages/AboutPage';
 import CoursesPage from '@/pages/CoursesPage';
+import GalleryPage from '@/pages/GalleryPage';
 import EnrollPage from '@/pages/EnrollPage';
 import AuthPage from '@/pages/AuthPage';
 import ProfilePage from '@/pages/ProfilePage';
 
-type Page = 'home' | 'about' | 'courses' | 'enroll' | 'login' | 'profile';
+type Page = 'home' | 'about' | 'courses' | 'gallery' | 'enroll' | 'login' | 'profile';
 
 interface User {
   name: string;
@@ -48,6 +49,7 @@ export default function App() {
         {currentPage === 'home' && <HomePage onNavigate={handleNavigate} />}
         {currentPage === 'about' && <AboutPage onNavigate={handleNavigate} />}
         {currentPage === 'courses' && <CoursesPage onNavigate={handleNavigate} />}
+        {currentPage === 'gallery' && <GalleryPage />}
         {currentPage === 'enroll' && <EnrollPage />}
         {currentPage === 'login' && (
           <AuthPage onLogin={handleLogin} onNavigate={handleNavigate} />

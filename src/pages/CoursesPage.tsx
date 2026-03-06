@@ -136,10 +136,10 @@ export default function CoursesPage({ onNavigate }: CoursesPageProps) {
           <button
             key={cat.id}
             onClick={() => setActiveCategory(cat.id)}
-            className={`px-5 py-2 text-xs tracking-widest uppercase font-golos transition-all duration-300 ${
+            className={`px-5 py-2 rounded-full font-golos text-sm transition-all duration-300 ${
               activeCategory === cat.id
-                ? 'bg-gold text-black font-semibold'
-                : 'border border-gold/20 text-muted-foreground hover:border-gold/40 hover:text-foreground'
+                ? 'btn-gold'
+                : 'btn-outline-gold'
             }`}
           >
             {cat.label}
@@ -152,13 +152,13 @@ export default function CoursesPage({ onNavigate }: CoursesPageProps) {
         {filtered.map((course) => (
           <div
             key={course.id}
-            className="card-glass card-glow border border-gold/10 p-7 flex flex-col transition-all duration-500 group hover:border-gold/25"
+            className="card-glass card-glow rounded-2xl border border-gold/10 p-7 flex flex-col transition-all duration-500 group hover:border-gold/25"
           >
             <div className="flex items-start justify-between mb-5">
-              <div className="w-10 h-10 border border-gold/30 flex items-center justify-center text-gold group-hover:bg-gold group-hover:text-black transition-all duration-300">
+              <div className="w-10 h-10 rounded-xl bg-gold/10 border border-gold/20 flex items-center justify-center text-gold group-hover:bg-gold group-hover:text-background transition-all duration-300">
                 <Icon name={course.icon} size={18} />
               </div>
-              <span className={`text-[10px] tracking-widest uppercase border px-2.5 py-1 font-golos ${levelColors[course.level]}`}>
+              <span className={`text-xs rounded-full border px-3 py-1 font-golos ${levelColors[course.level]}`}>
                 {course.level}
               </span>
             </div>
@@ -184,7 +184,7 @@ export default function CoursesPage({ onNavigate }: CoursesPageProps) {
 
             <button
               onClick={() => onNavigate('enroll')}
-              className="btn-outline-gold w-full py-3 text-xs tracking-widest uppercase font-golos font-medium"
+              className="btn-outline-gold w-full py-3 rounded-full font-golos text-sm font-medium"
             >
               Записаться
             </button>

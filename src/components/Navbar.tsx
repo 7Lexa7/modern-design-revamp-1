@@ -11,7 +11,7 @@ const navItems = [
   { id: 'home', label: 'Главная' },
   { id: 'about', label: 'Об академии' },
   { id: 'courses', label: 'Курсы' },
-  { id: 'enroll', label: 'Записаться' },
+  { id: 'gallery', label: 'Фото и видео' },
 ];
 
 export default function Navbar({ currentPage, onNavigate, isLoggedIn }: NavbarProps) {

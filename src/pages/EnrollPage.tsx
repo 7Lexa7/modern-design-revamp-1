@@ -57,7 +57,7 @@ export default function EnrollPage() {
               </div>
               <button
                 onClick={() => setSent(false)}
-                className="btn-outline-gold px-6 py-2.5 text-xs tracking-widest uppercase font-golos"
+                className="btn-outline-gold px-6 py-2.5 rounded-full font-golos text-sm"
               >
                 Отправить ещё
               </button>
@@ -74,7 +74,7 @@ export default function EnrollPage() {
                   value={form.name}
                   onChange={e => setForm({ ...form, name: e.target.value })}
                   placeholder="Иван Иванов"
-                  className="w-full bg-transparent border border-gold/20 px-4 py-3 text-foreground font-golos text-sm focus:outline-none focus:border-gold/50 transition-colors placeholder:text-muted-foreground/40"
+                  className="w-full bg-muted border border-border rounded-xl px-4 py-3 text-foreground font-golos text-sm focus:outline-none focus:border-gold/50 focus:ring-1 focus:ring-gold/20 transition-colors placeholder:text-muted-foreground/50"
                 />
               </div>
               <div>
@@ -87,7 +87,7 @@ export default function EnrollPage() {
                   value={form.phone}
                   onChange={e => setForm({ ...form, phone: e.target.value })}
                   placeholder="+7 (___) ___-__-__"
-                  className="w-full bg-transparent border border-gold/20 px-4 py-3 text-foreground font-golos text-sm focus:outline-none focus:border-gold/50 transition-colors placeholder:text-muted-foreground/40"
+                  className="w-full bg-muted border border-border rounded-xl px-4 py-3 text-foreground font-golos text-sm focus:outline-none focus:border-gold/50 focus:ring-1 focus:ring-gold/20 transition-colors placeholder:text-muted-foreground/50"
                 />
               </div>
               <div>
@@ -99,7 +99,7 @@ export default function EnrollPage() {
                   value={form.email}
                   onChange={e => setForm({ ...form, email: e.target.value })}
                   placeholder="example@mail.ru"
-                  className="w-full bg-transparent border border-gold/20 px-4 py-3 text-foreground font-golos text-sm focus:outline-none focus:border-gold/50 transition-colors placeholder:text-muted-foreground/40"
+                  className="w-full bg-muted border border-border rounded-xl px-4 py-3 text-foreground font-golos text-sm focus:outline-none focus:border-gold/50 focus:ring-1 focus:ring-gold/20 transition-colors placeholder:text-muted-foreground/50"
                 />
               </div>
               <div>
@@ -109,7 +109,7 @@ export default function EnrollPage() {
                 <select
                   value={form.course}
                   onChange={e => setForm({ ...form, course: e.target.value })}
-                  className="w-full bg-background border border-gold/20 px-4 py-3 text-foreground font-golos text-sm focus:outline-none focus:border-gold/50 transition-colors"
+                  className="w-full bg-muted border border-border rounded-xl px-4 py-3 text-foreground font-golos text-sm focus:outline-none focus:border-gold/50 focus:ring-1 focus:ring-gold/20 transition-colors"
                 >
                   <option value="" className="bg-background text-muted-foreground">Выберите курс...</option>
                   {courses.map(c => (
@@ -126,12 +126,12 @@ export default function EnrollPage() {
                   onChange={e => setForm({ ...form, message: e.target.value })}
                   rows={3}
                   placeholder="Расскажите о своём опыте и целях..."
-                  className="w-full bg-transparent border border-gold/20 px-4 py-3 text-foreground font-golos text-sm focus:outline-none focus:border-gold/50 transition-colors placeholder:text-muted-foreground/40 resize-none"
+                  className="w-full bg-muted border border-border rounded-xl px-4 py-3 text-foreground font-golos text-sm focus:outline-none focus:border-gold/50 focus:ring-1 focus:ring-gold/20 transition-colors placeholder:text-muted-foreground/50 resize-none"
                 />
               </div>
               <button
                 type="submit"
-                className="btn-gold w-full py-4 text-xs tracking-widest uppercase font-semibold font-golos"
+                className="btn-gold w-full py-4 rounded-full font-golos font-semibold text-sm"
               >
                 Отправить заявку
               </button>
@@ -144,11 +144,11 @@ export default function EnrollPage() {
 
         {/* КОНТАКТЫ */}
         <div className="space-y-6">
-          <div className="border border-gold/15 p-7">
+          <div className="card-glass rounded-2xl p-7">
             <h3 className="font-playfair text-2xl font-bold text-foreground mb-6">Контакты</h3>
             <div className="space-y-5">
               <div className="flex gap-4 items-start">
-                <div className="w-8 h-8 border border-gold/30 flex items-center justify-center text-gold flex-shrink-0">
+                <div className="w-8 h-8 rounded-lg bg-gold/10 border border-gold/20 flex items-center justify-center text-gold flex-shrink-0">
                   <Icon name="MapPin" size={15} />
                 </div>
                 <div>
@@ -157,7 +157,7 @@ export default function EnrollPage() {
                 </div>
               </div>
               <div className="flex gap-4 items-start">
-                <div className="w-8 h-8 border border-gold/30 flex items-center justify-center text-gold flex-shrink-0">
+                <div className="w-8 h-8 rounded-lg bg-gold/10 border border-gold/20 flex items-center justify-center text-gold flex-shrink-0">
                   <Icon name="Phone" size={15} />
                 </div>
                 <div>
@@ -168,7 +168,7 @@ export default function EnrollPage() {
                 </div>
               </div>
               <div className="flex gap-4 items-start">
-                <div className="w-8 h-8 border border-gold/30 flex items-center justify-center text-gold flex-shrink-0">
+                <div className="w-8 h-8 rounded-lg bg-gold/10 border border-gold/20 flex items-center justify-center text-gold flex-shrink-0">
                   <Icon name="Mail" size={15} />
                 </div>
                 <div>
@@ -181,8 +181,8 @@ export default function EnrollPage() {
             </div>
           </div>
 
-          <div className="border border-gold/15 p-7">
-            <h3 className="font-playfair text-xl font-semibold text-foreground mb-5">Почему Montparnas?</h3>
+          <div className="card-glass rounded-2xl p-7">
+            <h3 className="font-playfair text-xl font-semibold text-foreground mb-5">Почему Монпарнас?</h3>
             <div className="space-y-4">
               {[
                 { icon: 'GraduationCap', text: 'Педагоги МХАТ, Щукинского, ВГИК, ГИТИС' },
@@ -198,7 +198,7 @@ export default function EnrollPage() {
             </div>
           </div>
 
-          <div className="bg-gold/5 border border-gold/20 p-6">
+          <div className="bg-gold/5 border border-gold/20 rounded-2xl p-6">
             <p className="text-muted-foreground text-sm font-golos italic leading-relaxed">
               «Мы верим, что каждый человек обладает актёрским даром.
               Наша задача — помочь его раскрыть»
