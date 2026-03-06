@@ -1,28 +1,64 @@
+import { useState } from 'react';
+import Navbar from '@/components/Navbar';
+import HomePage from '@/pages/HomePage';
+import AboutPage from '@/pages/AboutPage';
+import CoursesPage from '@/pages/CoursesPage';
+import GalleryPage from '@/pages/GalleryPage';
+import EnrollPage from '@/pages/EnrollPage';
+import AuthPage from '@/pages/AuthPage';
+import ProfilePage from '@/pages/ProfilePage';
 
-import { Toaster } from "@/components/ui/toaster";
-import { Toaster as Sonner } from "@/components/ui/sonner";
-import { TooltipProvider } from "@/components/ui/tooltip";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Index from "./pages/Index";
-import NotFound from "./pages/NotFound";
+type Page = 'home' | 'about' | 'courses' | 'gallery' | 'enroll' | 'login' | 'profile';
 
-const queryClient = new QueryClient();
+interface User {
+  name: string;
+  email: string;
+}
 
-const App = () => (
-  <QueryClientProvider client={queryClient}>
-    <TooltipProvider>
-      <Toaster />
-      <Sonner />
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Index />} />
-          {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-      </BrowserRouter>
-    </TooltipProvider>
-  </QueryClientProvider>
-);
+export default function App() {
+  const [currentPage, setCurrentPage] = useState<Page>('home');
+  const [user, setUser] = useState<User | null>(null);
 
-export default App;
+  const handleNavigate = (page: string) => {
+    if (page === 'profile' && !user) {
+      setCurrentPage('login');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      return;
+    }
+    setCurrentPage(page as Page);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const handleLogin = (userData: User) => {
+    setUser(userData);
+  };
+
+  const handleLogout = () => {
+    setUser(null);
+    setCurrentPage('home');
+  };
+
+  return (
+    <div className="min-h-screen bg-background">
+      <Navbar
+        currentPage={currentPage}
+        onNavigate={handleNavigate}
+        isLoggedIn={!!user}
+      />
+
+      <main key={currentPage} className="animate-fade-in">
+        {currentPage === 'home' && <HomePage onNavigate={handleNavigate} />}
+        {currentPage === 'about' && <AboutPage onNavigate={handleNavigate} />}
+        {currentPage === 'courses' && <CoursesPage onNavigate={handleNavigate} />}
+        {currentPage === 'gallery' && <GalleryPage />}
+        {currentPage === 'enroll' && <EnrollPage />}
+        {currentPage === 'login' && (
+          <AuthPage onLogin={handleLogin} onNavigate={handleNavigate} />
+        )}
+        {currentPage === 'profile' && user && (
+          <ProfilePage user={user} onLogout={handleLogout} onNavigate={handleNavigate} />
+        )}
+      </main>
+    </div>
+  );
+}
