@@ -358,7 +358,15 @@ export default function HomePage({ onNavigate }: HomePageProps) {
           <div className="section-divider mb-6" />
           <div className="flex flex-col md:flex-row items-center justify-between gap-3">
             <p className="text-muted-foreground text-xs font-golos">© 2025 Академия кино Монпарнас. Все права защищены.</p>
-            <p className="text-muted-foreground/50 text-xs font-golos">г. Москва · Малая Лубянка, 16</p>
+            <div className="flex items-center gap-4">
+              <p className="text-muted-foreground/50 text-xs font-golos">г. Москва · Малая Лубянка, 16</p>
+              <button
+                onClick={() => onNavigate('admin')}
+                className="text-muted-foreground/30 hover:text-muted-foreground/60 transition-colors text-xs font-golos"
+              >
+                Панель управления
+              </button>
+            </div>
           </div>
         </div>
       </footer>
