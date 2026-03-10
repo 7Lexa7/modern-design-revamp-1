@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import Icon from '@/components/ui/icon';
+import { api } from '@/api';
 
 interface AuthPageProps {
   onLogin: (user: { name: string; email: string }, mode: 'login' | 'register') => void;
@@ -18,7 +19,7 @@ export default function AuthPage({ onLogin, onNavigate }: AuthPageProps) {
     setError('');
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
 
@@ -32,10 +33,23 @@ export default function AuthPage({ onLogin, onNavigate }: AuthPageProps) {
     if (!form.password) return setError('Введите пароль');
 
     setLoading(true);
-    setTimeout(() => {
+    try {
+      let result;
+      if (mode === 'register') {
+        result = await api.register(form.name, form.email, form.password);
+      } else {
+        result = await api.login(form.email, form.password);
+      }
+      if (result.error) {
+        setError(result.error);
+        setLoading(false);
+        return;
+      }
+      onLogin({ id: result.id, name: result.name, email: result.email, is_admin: result.is_admin }, mode);
+    } catch {
+      setError('Ошибка соединения. Попробуйте ещё раз.');
       setLoading(false);
-      onLogin({ name: form.name || form.email.split('@')[0], email: form.email }, mode);
-    }, 1200);
+    }
   };
 
   return (

@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import Navbar from '@/components/Navbar';
 import HomePage from '@/pages/HomePage';
 import AboutPage from '@/pages/AboutPage';
@@ -8,14 +8,17 @@ import EnrollPage from '@/pages/EnrollPage';
 import AuthPage from '@/pages/AuthPage';
 import ProfilePage from '@/pages/ProfilePage';
 import ReviewsPage from '@/pages/ReviewsPage';
+import AdminPage from '@/pages/AdminPage';
 import Icon from '@/components/ui/icon';
 
-type Page = 'home' | 'about' | 'courses' | 'gallery' | 'enroll' | 'login' | 'profile' | 'reviews';
+type Page = 'home' | 'about' | 'courses' | 'gallery' | 'enroll' | 'login' | 'profile' | 'reviews' | 'admin';
 
-interface User {
+export interface User {
+  id: number;
   name: string;
   email: string;
   avatar?: string;
+  is_admin?: boolean;
 }
 
 interface Toast {
@@ -67,19 +70,23 @@ export default function App() {
         currentPage={currentPage}
         onNavigate={handleNavigate}
         isLoggedIn={!!user}
+        isAdmin={!!user?.is_admin}
       />
       <main key={currentPage} className="animate-fade-in">
         {currentPage === 'home' && <HomePage onNavigate={handleNavigate} />}
         {currentPage === 'about' && <AboutPage onNavigate={handleNavigate} />}
         {currentPage === 'courses' && <CoursesPage onNavigate={handleNavigate} />}
         {currentPage === 'gallery' && <GalleryPage />}
-        {currentPage === 'enroll' && <EnrollPage />}
+        {currentPage === 'enroll' && <EnrollPage user={user} onNavigate={handleNavigate} />}
         {currentPage === 'reviews' && <ReviewsPage onNavigate={handleNavigate} user={user} />}
         {currentPage === 'login' && (
           <AuthPage onLogin={handleLogin} onNavigate={handleNavigate} />
         )}
         {currentPage === 'profile' && user && (
           <ProfilePage user={user} onLogout={handleLogout} onNavigate={handleNavigate} onUpdateUser={handleUpdateUser} />
+        )}
+        {currentPage === 'admin' && (
+          <AdminPage onNavigate={handleNavigate} />
         )}
       </main>
 

@@ -1,5 +1,7 @@
 import { useState } from 'react';
 import Icon from '@/components/ui/icon';
+import { api } from '@/api';
+import type { User } from '@/App';
 
 const courses = [
   'Базовый курс актёрского мастерства',
@@ -13,13 +15,45 @@ const courses = [
   'Звёздный мастер-класс',
 ];
 
-export default function EnrollPage() {
-  const [form, setForm] = useState({ name: '', phone: '', email: '', course: '', message: '' });
-  const [sent, setSent] = useState(false);
+interface EnrollPageProps {
+  user?: User | null;
+  onNavigate?: (page: string) => void;
+}
 
-  const handleSubmit = (e: React.FormEvent) => {
+export default function EnrollPage({ user, onNavigate }: EnrollPageProps) {
+  const [form, setForm] = useState({
+    name: user?.name || '',
+    phone: '',
+    email: user?.email || '',
+    course: '',
+    message: ''
+  });
+  const [sent, setSent] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setSent(true);
+    setError('');
+    setLoading(true);
+    try {
+      const res = await api.submitEnroll({
+        user_id: user?.id,
+        user_name: form.name,
+        user_email: form.email,
+        user_phone: form.phone,
+        course_title: form.course || 'Не указан',
+        message: form.message,
+      });
+      if (res.error) {
+        setError(res.error);
+      } else {
+        setSent(true);
+      }
+    } catch {
+      setError('Ошибка отправки. Попробуйте ещё раз.');
+    }
+    setLoading(false);
   };
 
   return (
@@ -129,11 +163,18 @@ export default function EnrollPage() {
                   className="w-full bg-muted border border-border rounded-xl px-4 py-3 text-foreground font-golos text-sm focus:outline-none focus:border-gold/50 focus:ring-1 focus:ring-gold/20 transition-colors placeholder:text-muted-foreground/50 resize-none"
                 />
               </div>
+              {error && (
+                <div className="flex items-center gap-2 p-3 rounded-xl bg-destructive/10 border border-destructive/20">
+                  <Icon name="AlertCircle" size={14} className="text-destructive shrink-0" />
+                  <span className="font-golos text-xs text-destructive">{error}</span>
+                </div>
+              )}
               <button
                 type="submit"
-                className="btn-gold w-full py-4 rounded-full font-golos font-semibold text-sm"
+                disabled={loading}
+                className="btn-gold w-full py-4 rounded-full font-golos font-semibold text-sm flex items-center justify-center gap-2 disabled:opacity-70"
               >
-                Отправить заявку
+                {loading ? <><Icon name="Loader" size={15} className="animate-spin" /> Отправляем...</> : 'Отправить заявку'}
               </button>
               <p className="text-muted-foreground/40 text-[10px] font-golos text-center leading-relaxed">
                 Нажимая кнопку, вы соглашаетесь на обработку персональных данных

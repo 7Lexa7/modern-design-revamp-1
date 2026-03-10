@@ -1,82 +1,54 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Icon from '@/components/ui/icon';
+import { api } from '@/api';
+
+import type { User } from '@/App';
 
 interface ReviewsPageProps {
   onNavigate: (page: string) => void;
-  user: { name: string; email: string } | null;
+  user: User | null;
 }
 
-const allReviews = [
-  {
-    name: 'Мария Соколова',
-    role: 'Базовый курс актёрского мастерства',
-    text: 'Пришла совершенно зажатой, боялась даже говорить на публике. После трёх месяцев в Монпарнасе выступаю перед аудиторией без страха. Педагоги — настоящие профессионалы!',
-    rating: 5,
-    avatar: 'М',
-    date: 'Февраль 2026',
-  },
-  {
-    name: 'Дмитрий Волков',
-    role: 'Мастер-курс Данилы Дунаева',
-    text: 'Уникальный опыт работы с настоящим мастером кино. После курса получил первую роль в сериале. Рекомендую всем, кто серьёзно хочет работать в кино.',
-    rating: 5,
-    avatar: 'Д',
-    date: 'Январь 2026',
-  },
-  {
-    name: 'Анна Кириллова',
-    role: 'Школа Юного Актёра',
-    text: 'Отдала дочь в Школу Юного Актёра — не узнаю ребёнка. Стала уверенной, раскованной, с удовольствием выступает на сцене. Спасибо команде Монпарнаса!',
-    rating: 5,
-    avatar: 'А',
-    date: 'Декабрь 2025',
-  },
-  {
-    name: 'Игорь Петров',
-    role: 'Актёрский интенсив',
-    text: 'Интенсив дал мне больше, чем я ожидал. За две недели — колоссальный прогресс. Метод Ли Страсберга в исполнении педагогов академии — это нечто особенное.',
-    rating: 5,
-    avatar: 'И',
-    date: 'Ноябрь 2025',
-  },
-  {
-    name: 'Светлана Орлова',
-    role: 'Продвинутый курс актёрского мастерства',
-    text: 'Второй год в академии. Здесь настоящая творческая семья. Каждое занятие — открытие. Я нашла себя именно в Монпарнасе.',
-    rating: 5,
-    avatar: 'С',
-    date: 'Октябрь 2025',
-  },
-  {
-    name: 'Роман Белов',
-    role: 'Подготовка в театральные ВУЗы',
-    text: 'Благодаря курсу подготовки поступил в ГИТИС с первого раза! Педагоги работали с каждым индивидуально. Очень благодарен всей команде.',
-    rating: 5,
-    avatar: 'Р',
-    date: 'Сентябрь 2025',
-  },
-];
+interface Review {
+  id: number;
+  name: string;
+  avatar: string;
+  course: string;
+  text: string;
+  rating: number;
+  date: string;
+}
+
+
 
 export default function ReviewsPage({ onNavigate, user }: ReviewsPageProps) {
-  const [reviews, setReviews] = useState(allReviews);
+  const [reviews, setReviews] = useState<Review[]>([]);
+  const [loading, setLoading] = useState(true);
   const [form, setForm] = useState({ course: '', text: '', rating: 5 });
   const [submitted, setSubmitted] = useState(false);
   const [hoverRating, setHoverRating] = useState(0);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  useEffect(() => {
+    api.getReviews().then(data => {
+      if (Array.isArray(data)) setReviews(data);
+      setLoading(false);
+    }).catch(() => setLoading(false));
+  }, []);
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!form.text.trim() || !form.course.trim()) return;
-    const newReview = {
-      name: user!.name,
-      role: form.course,
+    const res = await api.submitReview({
+      user_id: user!.id,
+      user_name: user!.name,
+      course_title: form.course,
       text: form.text,
       rating: form.rating,
-      avatar: user!.name.charAt(0).toUpperCase(),
-      date: 'Март 2026',
-    };
-    setReviews([newReview, ...reviews]);
-    setSubmitted(true);
-    setForm({ course: '', text: '', rating: 5 });
+    });
+    if (!res.error) {
+      setSubmitted(true);
+      setForm({ course: '', text: '', rating: 5 });
+    }
   };
 
   return (
@@ -189,30 +161,39 @@ export default function ReviewsPage({ onNavigate, user }: ReviewsPageProps) {
         )}
 
         {/* Reviews list */}
-        <div className="space-y-5">
-          {reviews.map((r, i) => (
-            <div key={i} className="card-glass rounded-2xl p-7 animate-fade-in" style={{ animationDelay: `${i * 0.05}s` }}>
-              <div className="flex items-start gap-4">
-                <div className="w-11 h-11 rounded-full bg-gradient-to-br from-gold/40 to-gold-dark/40 border border-gold/30 flex items-center justify-center text-gold font-playfair font-bold text-lg flex-shrink-0">
-                  {r.avatar}
-                </div>
-                <div className="flex-1 min-w-0">
-                  <div className="flex items-center justify-between gap-2 mb-0.5">
-                    <span className="font-golos font-semibold text-foreground">{r.name}</span>
-                    <span className="font-golos text-xs text-muted-foreground flex-shrink-0">{r.date}</span>
+        {loading ? (
+          <div className="flex justify-center py-16">
+            <Icon name="Loader" size={28} className="text-gold animate-spin" />
+          </div>
+        ) : (
+          <div className="space-y-5">
+            {reviews.length === 0 && (
+              <div className="card-glass rounded-2xl p-10 text-center text-muted-foreground font-golos">Отзывов пока нет</div>
+            )}
+            {reviews.map((r, i) => (
+              <div key={r.id} className="card-glass rounded-2xl p-7 animate-fade-in" style={{ animationDelay: `${i * 0.05}s` }}>
+                <div className="flex items-start gap-4">
+                  <div className="w-11 h-11 rounded-full bg-gradient-to-br from-gold/40 to-gold-dark/40 border border-gold/30 flex items-center justify-center text-gold font-playfair font-bold text-lg flex-shrink-0">
+                    {r.avatar}
                   </div>
-                  <p className="font-golos text-xs text-gold mb-3">{r.role}</p>
-                  <div className="flex gap-0.5 mb-3">
-                    {Array.from({ length: r.rating }).map((_, si) => (
-                      <Icon key={si} name="Star" size={12} className="text-gold" />
-                    ))}
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-center justify-between gap-2 mb-0.5">
+                      <span className="font-golos font-semibold text-foreground">{r.name}</span>
+                      <span className="font-golos text-xs text-muted-foreground flex-shrink-0">{r.date}</span>
+                    </div>
+                    <p className="font-golos text-xs text-gold mb-3">{r.course}</p>
+                    <div className="flex gap-0.5 mb-3">
+                      {Array.from({ length: r.rating }).map((_, si) => (
+                        <Icon key={si} name="Star" size={12} className="text-gold" />
+                      ))}
+                    </div>
+                    <p className="font-golos text-sm text-muted-foreground leading-relaxed">{r.text}</p>
                   </div>
-                  <p className="font-golos text-sm text-muted-foreground leading-relaxed">{r.text}</p>
                 </div>
               </div>
-            </div>
-          ))}
-        </div>
+            ))}
+          </div>
+        )}
       </div>
     </div>
   );

@@ -5,6 +5,7 @@ interface NavbarProps {
   currentPage: string;
   onNavigate: (page: string) => void;
   isLoggedIn: boolean;
+  isAdmin?: boolean;
 }
 
 const navItems = [
@@ -14,7 +15,7 @@ const navItems = [
   { id: 'gallery', label: 'Фото и видео' },
 ];
 
-export default function Navbar({ currentPage, onNavigate, isLoggedIn }: NavbarProps) {
+export default function Navbar({ currentPage, onNavigate, isLoggedIn, isAdmin }: NavbarProps) {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
 
@@ -62,6 +63,15 @@ export default function Navbar({ currentPage, onNavigate, isLoggedIn }: NavbarPr
         </div>
 
         <div className="hidden md:flex items-center gap-3">
+          {isAdmin && (
+            <button
+              onClick={() => onNavigate('admin')}
+              className="flex items-center gap-2 px-4 py-2 rounded-full border border-gold/20 text-gold/70 hover:text-gold hover:bg-gold/10 transition-all duration-300 text-sm font-golos"
+            >
+              <Icon name="Shield" size={14} />
+              Админ
+            </button>
+          )}
           {isLoggedIn ? (
             <button
               onClick={() => onNavigate('profile')}
@@ -110,6 +120,11 @@ export default function Navbar({ currentPage, onNavigate, isLoggedIn }: NavbarPr
             </button>
           ))}
           <div className="section-divider my-2" />
+          {isAdmin && (
+            <button onClick={() => { onNavigate('admin'); setMenuOpen(false); }} className="text-left text-gold/70 font-golos flex items-center gap-2">
+              <Icon name="Shield" size={14} /> Панель администратора
+            </button>
+          )}
           {isLoggedIn ? (
             <button onClick={() => { onNavigate('profile'); setMenuOpen(false); }} className="text-left text-gold font-golos">
               Профиль
