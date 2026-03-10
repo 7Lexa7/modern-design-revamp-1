@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Navbar from '@/components/Navbar';
 import HomePage from '@/pages/HomePage';
 import AboutPage from '@/pages/AboutPage';
@@ -7,17 +7,31 @@ import GalleryPage from '@/pages/GalleryPage';
 import EnrollPage from '@/pages/EnrollPage';
 import AuthPage from '@/pages/AuthPage';
 import ProfilePage from '@/pages/ProfilePage';
+import ReviewsPage from '@/pages/ReviewsPage';
+import Icon from '@/components/ui/icon';
 
-type Page = 'home' | 'about' | 'courses' | 'gallery' | 'enroll' | 'login' | 'profile';
+type Page = 'home' | 'about' | 'courses' | 'gallery' | 'enroll' | 'login' | 'profile' | 'reviews';
 
 interface User {
   name: string;
   email: string;
+  avatar?: string;
+}
+
+interface Toast {
+  message: string;
+  visible: boolean;
 }
 
 export default function App() {
   const [currentPage, setCurrentPage] = useState<Page>('home');
   const [user, setUser] = useState<User | null>(null);
+  const [toast, setToast] = useState<Toast>({ message: '', visible: false });
+
+  const showToast = (message: string) => {
+    setToast({ message, visible: true });
+    setTimeout(() => setToast({ message: '', visible: false }), 3500);
+  };
 
   const handleNavigate = (page: string) => {
     if (page === 'profile' && !user) {
@@ -29,13 +43,22 @@ export default function App() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  const handleLogin = (userData: User) => {
+  const handleLogin = (userData: User, mode: 'login' | 'register') => {
     setUser(userData);
+    setCurrentPage('home');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    setTimeout(() => {
+      showToast(mode === 'login' ? `С возвращением, ${userData.name.split(' ')[0]}!` : `Добро пожаловать в академию, ${userData.name.split(' ')[0]}!`);
+    }, 400);
   };
 
   const handleLogout = () => {
     setUser(null);
     setCurrentPage('home');
+  };
+
+  const handleUpdateUser = (updated: User) => {
+    setUser(updated);
   };
 
   return (
@@ -51,13 +74,28 @@ export default function App() {
         {currentPage === 'courses' && <CoursesPage onNavigate={handleNavigate} />}
         {currentPage === 'gallery' && <GalleryPage />}
         {currentPage === 'enroll' && <EnrollPage />}
+        {currentPage === 'reviews' && <ReviewsPage onNavigate={handleNavigate} user={user} />}
         {currentPage === 'login' && (
           <AuthPage onLogin={handleLogin} onNavigate={handleNavigate} />
         )}
         {currentPage === 'profile' && user && (
-          <ProfilePage user={user} onLogout={handleLogout} onNavigate={handleNavigate} />
+          <ProfilePage user={user} onLogout={handleLogout} onNavigate={handleNavigate} onUpdateUser={handleUpdateUser} />
         )}
       </main>
+
+      {/* Toast */}
+      <div
+        className={`fixed bottom-8 left-1/2 -translate-x-1/2 z-50 transition-all duration-500 ${
+          toast.visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4 pointer-events-none'
+        }`}
+      >
+        <div className="flex items-center gap-3 px-6 py-4 rounded-2xl card-glass border border-gold/30 shadow-xl shadow-gold/10">
+          <div className="w-7 h-7 rounded-full bg-gold/15 border border-gold/30 flex items-center justify-center flex-shrink-0">
+            <Icon name="Sparkles" size={14} className="text-gold" />
+          </div>
+          <span className="font-golos text-sm text-foreground">{toast.message}</span>
+        </div>
+      </div>
     </div>
   );
 }

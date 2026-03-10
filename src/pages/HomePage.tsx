@@ -247,6 +247,15 @@ export default function HomePage({ onNavigate }: HomePageProps) {
               </div>
             ))}
           </div>
+
+          <div className="text-center mt-10">
+            <button
+              onClick={() => onNavigate('reviews')}
+              className="btn-outline-gold px-8 py-3.5 rounded-full font-golos text-sm inline-flex items-center gap-2"
+            >
+              Все отзывы и оставить свой <Icon name="ArrowRight" size={14} />
+            </button>
+          </div>
         </div>
       </section>
 

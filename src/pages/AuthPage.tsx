@@ -2,7 +2,7 @@ import { useState } from 'react';
 import Icon from '@/components/ui/icon';
 
 interface AuthPageProps {
-  onLogin: (user: { name: string; email: string }) => void;
+  onLogin: (user: { name: string; email: string }, mode: 'login' | 'register') => void;
   onNavigate: (page: string) => void;
 }
 
@@ -34,8 +34,7 @@ export default function AuthPage({ onLogin, onNavigate }: AuthPageProps) {
     setLoading(true);
     setTimeout(() => {
       setLoading(false);
-      onLogin({ name: form.name || form.email.split('@')[0], email: form.email });
-      onNavigate('profile');
+      onLogin({ name: form.name || form.email.split('@')[0], email: form.email }, mode);
     }, 1200);
   };
 
