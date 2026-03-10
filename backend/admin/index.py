@@ -51,13 +51,14 @@ def handler(event: dict, context) -> dict:
     if event.get('httpMethod') == 'OPTIONS':
         return {'statusCode': 200, 'headers': headers, 'body': ''}
 
-    admin_key = event.get('headers', {}).get('x-admin-key', '')
+    method = event.get('httpMethod', 'GET')
+    body = json.loads(event.get('body') or '{}')
+
+    admin_key = body.get('key', '') or event.get('headers', {}).get('x-admin-key', '')
     expected_key = os.environ.get('ADMIN_KEY', '')
     if not expected_key or admin_key != expected_key:
         return {'statusCode': 403, 'headers': headers, 'body': json.dumps({'error': 'Forbidden'})}
 
-    method = event.get('httpMethod', 'GET')
-    body = json.loads(event.get('body') or '{}')
     action = body.get('action', '') or event.get('queryStringParameters', {}).get('action', '')
     schema = os.environ.get('MAIN_DB_SCHEMA', 'public')
 

@@ -6,17 +6,18 @@ const URLS = {
 };
 
 async function post(url: string, body: object, adminKey?: string) {
-  const headers: Record<string, string> = { 'Content-Type': 'application/json' };
-  if (adminKey) headers['x-admin-key'] = adminKey;
-  const res = await fetch(url, { method: 'POST', headers, body: JSON.stringify(body) });
+  const payload = adminKey ? { ...body, key: adminKey } : body;
+  const res = await fetch(url, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(payload),
+  });
   return res.json();
 }
 
-async function get(url: string, params?: Record<string, string>, adminKey?: string) {
-  const headers: Record<string, string> = {};
-  if (adminKey) headers['x-admin-key'] = adminKey;
+async function get(url: string, params?: Record<string, string>) {
   const query = params ? '?' + new URLSearchParams(params).toString() : '';
-  const res = await fetch(url + query, { headers });
+  const res = await fetch(url + query);
   return res.json();
 }
 
