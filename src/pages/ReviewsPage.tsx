@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import Icon from '@/components/ui/icon';
+import Footer from '@/components/Footer';
 import { api } from '@/api';
 
 import type { User } from '@/App';
@@ -195,6 +196,7 @@ export default function ReviewsPage({ onNavigate, user }: ReviewsPageProps) {
           </div>
         )}
       </div>
+      <Footer onNavigate={onNavigate} />
     </div>
   );
 }

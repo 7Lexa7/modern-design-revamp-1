@@ -84,6 +84,8 @@ export default function AdminPage({ onNavigate }: AdminPageProps) {
     setLoading(false);
   };
 
+  const [savingSchedule, setSavingSchedule] = useState<Record<number, boolean>>({});
+
   const approveEnrollment = async (id: number) => {
     const schedule = scheduleEdit[id] || '';
     await api.admin.updateEnrollment(key, id, 'approved', schedule);
@@ -93,6 +95,14 @@ export default function AdminPage({ onNavigate }: AdminPageProps) {
   const rejectEnrollment = async (id: number) => {
     await api.admin.updateEnrollment(key, id, 'rejected', '');
     setEnrollments(prev => prev.map(e => e.id === id ? { ...e, status: 'rejected' } : e));
+  };
+
+  const saveSchedule = async (id: number, currentStatus: string) => {
+    setSavingSchedule(prev => ({ ...prev, [id]: true }));
+    const schedule = scheduleEdit[id] ?? '';
+    await api.admin.updateEnrollment(key, id, currentStatus, schedule);
+    setEnrollments(prev => prev.map(e => e.id === id ? { ...e, schedule } : e));
+    setSavingSchedule(prev => ({ ...prev, [id]: false }));
   };
 
   const approveReview = async (id: number) => {
@@ -238,7 +248,7 @@ export default function AdminPage({ onNavigate }: AdminPageProps) {
                       <input
                         type="text"
                         placeholder="Например: Вт, Чт 19:00–21:00, начало 1 апреля"
-                        value={scheduleEdit[e.id] || ''}
+                        value={scheduleEdit[e.id] ?? ''}
                         onChange={ev => setScheduleEdit(prev => ({ ...prev, [e.id]: ev.target.value }))}
                         className="w-full bg-muted border border-border rounded-xl px-4 py-2.5 font-golos text-sm text-foreground focus:outline-none focus:border-gold/50"
                       />
@@ -259,11 +269,35 @@ export default function AdminPage({ onNavigate }: AdminPageProps) {
                     </div>
                   </div>
                 )}
-                {e.status === 'approved' && e.schedule && (
-                  <div className="border-t border-border pt-3">
-                    <p className="font-golos text-sm text-emerald-400 flex items-center gap-2">
-                      <Icon name="Calendar" size={13} /> {e.schedule}
-                    </p>
+                {e.status === 'approved' && (
+                  <div className="border-t border-border pt-4 space-y-3">
+                    <div>
+                      <label className="block text-xs font-golos text-muted-foreground mb-1.5 flex items-center gap-1.5">
+                        <Icon name="Calendar" size={12} className="text-gold" /> Расписание занятий
+                      </label>
+                      <div className="flex gap-2">
+                        <input
+                          type="text"
+                          placeholder="Введите или обновите расписание..."
+                          value={scheduleEdit[e.id] ?? (e.schedule || '')}
+                          onChange={ev => setScheduleEdit(prev => ({ ...prev, [e.id]: ev.target.value }))}
+                          className="flex-1 bg-muted border border-border rounded-xl px-4 py-2.5 font-golos text-sm text-foreground focus:outline-none focus:border-gold/50"
+                        />
+                        <button
+                          onClick={() => saveSchedule(e.id, e.status)}
+                          disabled={savingSchedule[e.id]}
+                          className="flex items-center gap-2 px-4 py-2 rounded-xl bg-gold/10 border border-gold/30 text-gold hover:bg-gold/20 transition-all font-golos text-sm flex-shrink-0"
+                        >
+                          {savingSchedule[e.id] ? <Icon name="Loader" size={13} className="animate-spin" /> : <Icon name="Save" size={13} />}
+                          Сохранить
+                        </button>
+                      </div>
+                      {e.schedule && (
+                        <p className="font-golos text-xs text-emerald-400/70 flex items-center gap-1.5">
+                          <Icon name="CheckCircle" size={11} /> Текущее: {e.schedule}
+                        </p>
+                      )}
+                    </div>
                   </div>
                 )}
               </div>

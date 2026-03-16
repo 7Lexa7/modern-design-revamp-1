@@ -1,8 +1,43 @@
+import { useState } from 'react';
 import Icon from '@/components/ui/icon';
+import Footer from '@/components/Footer';
 
 interface AboutPageProps {
   onNavigate: (page: string) => void;
 }
+
+const mainTeachers = [
+  {
+    id: 'ovchinnikov',
+    name: 'Родион Овчинников',
+    role: 'Актёр, режиссёр, заслуженный артист России',
+    detail: 'Профессор ВТУ им. Щукина. Театр «Ленком», Таганка',
+  },
+  {
+    id: 'isaeva',
+    name: 'Вероника Исаева',
+    role: 'Педагог по сценической речи и актёрскому мастерству',
+    detail: 'Школа-студия МХАТ, ВТУ им. Щукина. Опыт с 2006 года',
+  },
+  {
+    id: 'kuzina',
+    name: 'Виктория Кузина',
+    role: 'Педагог по системе Ли Страсберга',
+    detail: 'Кастинг-директор. «О чём говорят мужчины» и другие',
+  },
+  {
+    id: 'rapoport',
+    name: 'Александр Рапопорт',
+    role: 'Педагог по актёрскому мастерству',
+    detail: 'Актёр театра и кино, режиссёр',
+  },
+  {
+    id: 'dunaev',
+    name: 'Данила Дунаев',
+    role: 'Педагог по актёрскому мастерству',
+    detail: 'Актёр театра и кино',
+  },
+];
 
 const values = [
   { icon: 'GraduationCap', title: 'Профессионализм', desc: 'Педагоги ведущих театральных ВУЗов Москвы: МХАТ, ВТУ им. Щукина, ВГИК и других.' },
@@ -14,8 +49,17 @@ const values = [
 const schools = ['МХАТ', 'ВТУ им. Щукина', 'ВГИК', 'ГИТИС', 'ВТУ им. Вахтангова'];
 
 export default function AboutPage({ onNavigate }: AboutPageProps) {
+  const [showAllTeachers, setShowAllTeachers] = useState(false);
+
+  const otherTeachers = [
+    'Роман Полянский', 'Игорь Маслов', 'Дмитрий Мухамадаев', 'Михаил Милькис',
+    'Анна Гусарова', 'Станислав Сошников', 'Аида Цомаева', 'Александра Вишневская',
+    'Максим Бойцов', 'Владислав Сахнов', 'Валерия Итименева', 'Александра Блинова',
+    'Татьяна Андреева', 'Елена Стефанко', 'Елена Малинская',
+  ];
+
   return (
-    <div className="pt-24 pb-20 overflow-x-hidden">
+    <div className="pt-24 overflow-x-hidden">
       {/* HERO */}
       <section className="py-20 px-6 text-center relative">
         <div className="absolute inset-0 opacity-5"
@@ -127,6 +171,71 @@ export default function AboutPage({ onNavigate }: AboutPageProps) {
         </div>
       </section>
 
+      {/* ПЕДАГОГИ */}
+      <section className="py-20 px-6">
+        <div className="max-w-5xl mx-auto">
+          <div className="text-center mb-14">
+            <div className="flex items-center justify-center gap-4 mb-5">
+              <div className="h-px w-8 bg-gold/40" />
+              <span className="text-gold/60 text-[10px] tracking-[0.4em] uppercase font-golos">Преподаватели</span>
+              <div className="h-px w-8 bg-gold/40" />
+            </div>
+            <h2 className="font-playfair text-4xl font-bold text-foreground">
+              Наши <span className="italic text-gradient-gold">педагоги</span>
+            </h2>
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+            {mainTeachers.map((t) => (
+              <button
+                key={t.id}
+                onClick={() => onNavigate(`teacher:${t.id}`)}
+                className="card-glass card-glow rounded-2xl p-6 text-left group hover:border-gold/30 transition-all duration-500 border border-gold/10"
+              >
+                <div className="flex items-center gap-4 mb-4">
+                  <div className="w-14 h-14 rounded-full bg-gradient-to-br from-gold/20 to-gold-dark/20 border border-gold/30 flex items-center justify-center flex-shrink-0 group-hover:border-gold/60 transition-all duration-300">
+                    <span className="font-playfair font-bold text-2xl text-gold">{t.name[0]}</span>
+                  </div>
+                  <div className="min-w-0">
+                    <h3 className="font-playfair text-base font-semibold text-foreground leading-tight">{t.name}</h3>
+                  </div>
+                </div>
+                <p className="font-golos text-xs text-gold mb-1">{t.role}</p>
+                <p className="font-golos text-xs text-muted-foreground leading-relaxed">{t.detail}</p>
+                <div className="flex items-center gap-1 mt-4 text-gold/50 group-hover:text-gold transition-colors text-xs font-golos">
+                  Подробнее <Icon name="ArrowRight" size={12} />
+                </div>
+              </button>
+            ))}
+          </div>
+
+          <div className="mt-6 text-center">
+            <button
+              onClick={() => setShowAllTeachers(!showAllTeachers)}
+              className="btn-outline-gold px-8 py-3 rounded-full font-golos text-sm inline-flex items-center gap-2"
+            >
+              <Icon name={showAllTeachers ? 'ChevronUp' : 'Users'} size={15} />
+              {showAllTeachers ? 'Скрыть' : 'Другие преподаватели'}
+            </button>
+
+            {showAllTeachers && (
+              <div className="mt-8 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3 animate-fade-in">
+                {otherTeachers.map((name, i) => (
+                  <div
+                    key={i}
+                    className="card-glass rounded-xl p-3 flex items-center gap-3 border border-gold/10"
+                  >
+                    <div className="w-9 h-9 rounded-full bg-gold/10 border border-gold/20 flex items-center justify-center flex-shrink-0">
+                      <span className="font-playfair font-bold text-sm text-gold">{name[0]}</span>
+                    </div>
+                    <span className="font-golos text-sm text-muted-foreground text-left leading-tight">{name}</span>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+        </div>
+      </section>
+
       {/* АДРЕС */}
       <section className="py-20 px-6">
         <div className="max-w-3xl mx-auto text-center">
@@ -158,6 +267,7 @@ export default function AboutPage({ onNavigate }: AboutPageProps) {
           </button>
         </div>
       </section>
+      <Footer onNavigate={onNavigate} />
     </div>
   );
 }

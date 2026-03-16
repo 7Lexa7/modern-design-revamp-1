@@ -81,21 +81,19 @@ export default function Navbar({ currentPage, onNavigate, isLoggedIn, isAdmin }:
               Профиль
             </button>
           ) : (
-            <>
-              <button
-                onClick={() => onNavigate('login')}
-                className="px-4 py-2 text-sm font-golos text-muted-foreground hover:text-foreground transition-colors"
-              >
-                Войти
-              </button>
-              <button
-                onClick={() => onNavigate('enroll')}
-                className="px-5 py-2 rounded-full btn-gold text-sm font-golos"
-              >
-                Записаться
-              </button>
-            </>
+            <button
+              onClick={() => onNavigate('login')}
+              className="px-4 py-2 text-sm font-golos text-muted-foreground hover:text-foreground transition-colors"
+            >
+              Войти
+            </button>
           )}
+          <button
+            onClick={() => onNavigate('enroll')}
+            className="px-5 py-2 rounded-full btn-gold text-sm font-golos"
+          >
+            Записаться
+          </button>
         </div>
 
         <button
@@ -130,11 +128,9 @@ export default function Navbar({ currentPage, onNavigate, isLoggedIn, isAdmin }:
               Профиль
             </button>
           ) : (
-            <>
-              <button onClick={() => { onNavigate('login'); setMenuOpen(false); }} className="text-left text-muted-foreground font-golos">Войти</button>
-              <button onClick={() => { onNavigate('enroll'); setMenuOpen(false); }} className="btn-gold px-5 py-2.5 rounded-full text-sm w-full font-golos">Записаться</button>
-            </>
+            <button onClick={() => { onNavigate('login'); setMenuOpen(false); }} className="text-left text-muted-foreground font-golos">Войти</button>
           )}
+          <button onClick={() => { onNavigate('enroll'); setMenuOpen(false); }} className="btn-gold px-5 py-2.5 rounded-full text-sm w-full font-golos">Записаться</button>
         </div>
       )}
     </nav>

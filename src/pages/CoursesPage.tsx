@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import Icon from '@/components/ui/icon';
+import Footer from '@/components/Footer';
 
 interface CoursesPageProps {
   onNavigate: (page: string) => void;
@@ -114,7 +115,7 @@ export default function CoursesPage({ onNavigate }: CoursesPageProps) {
     : courses.filter(c => c.category === activeCategory);
 
   return (
-    <div className="pt-24 pb-20">
+    <div className="pt-24">
       {/* HEADER */}
       <section className="py-16 px-6 text-center">
         <div className="flex items-center justify-center gap-4 mb-8">
@@ -193,7 +194,7 @@ export default function CoursesPage({ onNavigate }: CoursesPageProps) {
       </div>
 
       {/* CTA */}
-      <div className="text-center mt-20 px-6">
+      <div className="text-center mt-20 px-6 pb-20">
         <p className="text-muted-foreground/60 text-sm font-golos mb-6 italic">
           Не знаете, какой курс выбрать? Свяжитесь с нами — поможем разобраться.
         </p>
@@ -205,6 +206,7 @@ export default function CoursesPage({ onNavigate }: CoursesPageProps) {
           +7 (915) 327-97-55
         </a>
       </div>
+      <Footer onNavigate={onNavigate} />
     </div>
   );
 }

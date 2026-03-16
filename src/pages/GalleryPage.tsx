@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import Icon from '@/components/ui/icon';
+import Footer from '@/components/Footer';
 
 const HERO_IMG = 'https://cdn.poehali.dev/projects/f836a67a-a8be-4af0-8a66-d2f5ea2f50dd/files/7518d156-258b-4fc6-affa-7fb8a437df12.jpg';
 
@@ -16,7 +17,11 @@ const galleryItems = [
 
 const galleryCategories = ['Все', 'Академия', 'Студенты', 'Мастер-курсы', 'Видео'];
 
-export default function GalleryPage() {
+interface GalleryPageProps {
+  onNavigate: (page: string) => void;
+}
+
+export default function GalleryPage({ onNavigate }: GalleryPageProps) {
   const [activeCategory, setActiveCategory] = useState('Все');
   const [lightbox, setLightbox] = useState<string | null>(null);
 
@@ -100,21 +105,8 @@ export default function GalleryPage() {
           </div>
         )}
 
-        {/* YouTube section */}
-        <div className="mt-16 card-glass rounded-3xl p-10 text-center">
-          <Icon name="Youtube" size={40} className="text-gold mx-auto mb-4" />
-          <h2 className="font-playfair text-3xl font-light mb-3">Смотри нас на YouTube</h2>
-          <p className="font-golos text-muted-foreground mb-6 max-w-md mx-auto">
-            Записи мастер-классов, отрывки из занятий и жизнь академии — на нашем канале
-          </p>
-          <a
-            href="#"
-            className="btn-gold px-8 py-3 rounded-full font-golos text-sm inline-flex items-center gap-2"
-          >
-            Перейти на канал <Icon name="ExternalLink" size={14} />
-          </a>
-        </div>
       </div>
+      <Footer onNavigate={onNavigate} />
     </div>
   );
 }

@@ -178,17 +178,24 @@ export default function ProfilePage({ user, onLogout, onNavigate, onUpdateUser }
                         <Icon name={e.status === 'approved' ? 'CheckCircle' : e.status === 'rejected' ? 'XCircle' : 'Clock'} size={11} fallback="Circle" />
                         {st.label}
                       </span>
-                      {e.status === 'approved' && e.schedule && (
+                      {e.schedule ? (
                         <div className="flex items-start gap-2 mt-3 p-3 rounded-xl bg-emerald-500/5 border border-emerald-500/20">
                           <Icon name="Calendar" size={14} className="text-emerald-400 mt-0.5 flex-shrink-0" />
-                          <p className="font-golos text-sm text-emerald-300">{e.schedule}</p>
+                          <div>
+                            <p className="font-golos text-xs text-emerald-400/70 mb-0.5">Расписание занятий</p>
+                            <p className="font-golos text-sm text-emerald-300">{e.schedule}</p>
+                          </div>
                         </div>
-                      )}
-                      {e.status === 'pending' && (
+                      ) : e.status === 'approved' ? (
+                        <div className="flex items-start gap-2 mt-3 p-3 rounded-xl bg-gold/5 border border-gold/15">
+                          <Icon name="Clock" size={14} className="text-gold/60 mt-0.5 flex-shrink-0" />
+                          <p className="font-golos text-xs text-muted-foreground">Расписание занятий скоро появится</p>
+                        </div>
+                      ) : e.status === 'pending' ? (
                         <p className="font-golos text-xs text-muted-foreground mt-3">
                           Мы рассматриваем вашу заявку и скоро свяжемся с вами
                         </p>
-                      )}
+                      ) : null}
                     </div>
                   </div>
                 );

@@ -9,9 +9,10 @@ import AuthPage from '@/pages/AuthPage';
 import ProfilePage from '@/pages/ProfilePage';
 import ReviewsPage from '@/pages/ReviewsPage';
 import AdminPage from '@/pages/AdminPage';
+import TeacherPage from '@/pages/TeacherPage';
 import Icon from '@/components/ui/icon';
 
-type Page = 'home' | 'about' | 'courses' | 'gallery' | 'enroll' | 'login' | 'profile' | 'reviews' | 'admin';
+type Page = 'home' | 'about' | 'courses' | 'gallery' | 'enroll' | 'login' | 'profile' | 'reviews' | 'admin' | string;
 
 export interface User {
   id: number;
@@ -28,6 +29,7 @@ interface Toast {
 
 export default function App() {
   const [currentPage, setCurrentPage] = useState<Page>('home');
+  const [teacherId, setTeacherId] = useState<string>('');
   const [user, setUser] = useState<User | null>(null);
   const [toast, setToast] = useState<Toast>({ message: '', visible: false });
 
@@ -42,7 +44,13 @@ export default function App() {
       window.scrollTo({ top: 0, behavior: 'smooth' });
       return;
     }
-    setCurrentPage(page as Page);
+    if (page.startsWith('teacher:')) {
+      setTeacherId(page.replace('teacher:', ''));
+      setCurrentPage('teacher');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      return;
+    }
+    setCurrentPage(page);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
@@ -72,11 +80,11 @@ export default function App() {
         isLoggedIn={!!user}
         isAdmin={!!user?.is_admin}
       />
-      <main key={currentPage} className="animate-fade-in">
+      <main key={currentPage + teacherId} className="animate-fade-in">
         {currentPage === 'home' && <HomePage onNavigate={handleNavigate} />}
         {currentPage === 'about' && <AboutPage onNavigate={handleNavigate} />}
         {currentPage === 'courses' && <CoursesPage onNavigate={handleNavigate} />}
-        {currentPage === 'gallery' && <GalleryPage />}
+        {currentPage === 'gallery' && <GalleryPage onNavigate={handleNavigate} />}
         {currentPage === 'enroll' && <EnrollPage user={user} onNavigate={handleNavigate} />}
         {currentPage === 'reviews' && <ReviewsPage onNavigate={handleNavigate} user={user} />}
         {currentPage === 'login' && (
@@ -87,6 +95,9 @@ export default function App() {
         )}
         {currentPage === 'admin' && (
           <AdminPage onNavigate={handleNavigate} />
+        )}
+        {currentPage === 'teacher' && (
+          <TeacherPage teacherId={teacherId} onNavigate={handleNavigate} />
         )}
       </main>
 
