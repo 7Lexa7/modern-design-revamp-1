@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import Icon from '@/components/ui/icon';
 import Footer from '@/components/Footer';
 
@@ -46,18 +45,8 @@ const values = [
   { icon: 'Target', title: 'Практика', desc: 'Реальные навыки для работы в кино, на телевидении и публичных выступлений.' },
 ];
 
-const schools = ['МХАТ', 'ВТУ им. Щукина', 'ВГИК', 'ГИТИС', 'ВТУ им. Вахтангова'];
 
 export default function AboutPage({ onNavigate }: AboutPageProps) {
-  const [showAllTeachers, setShowAllTeachers] = useState(false);
-
-  const otherTeachers = [
-    'Роман Полянский', 'Игорь Маслов', 'Дмитрий Мухамадаев', 'Михаил Милькис',
-    'Анна Гусарова', 'Станислав Сошников', 'Аида Цомаева', 'Александра Вишневская',
-    'Максим Бойцов', 'Владислав Сахнов', 'Валерия Итименева', 'Александра Блинова',
-    'Татьяна Андреева', 'Елена Стефанко', 'Елена Малинская',
-  ];
-
   return (
     <div className="pt-24 overflow-x-hidden">
       {/* HERO */}
@@ -153,38 +142,21 @@ export default function AboutPage({ onNavigate }: AboutPageProps) {
         </div>
       </section>
 
-      {/* ВУЗы */}
-      <section className="py-16 px-6 bg-black/30">
-        <div className="max-w-4xl mx-auto text-center">
-          <div className="flex items-center justify-center gap-4 mb-10">
-            <div className="h-px w-8 bg-gold/40" />
-            <span className="text-gold/60 text-[10px] tracking-[0.4em] uppercase font-golos">Педагоги из ВУЗов</span>
-            <div className="h-px w-8 bg-gold/40" />
-          </div>
-          <div className="flex flex-wrap justify-center gap-4">
-            {schools.map((school, i) => (
-              <div key={i} className="border border-gold/20 px-6 py-3 text-sm text-foreground/70 font-golos tracking-wider hover:border-gold/40 hover:text-foreground transition-all duration-300">
-                {school}
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
       {/* ПЕДАГОГИ */}
-      <section className="py-20 px-6">
+      <section className="py-20 px-6 bg-black/30">
         <div className="max-w-5xl mx-auto">
-          <div className="text-center mb-14">
+          <div className="text-center mb-12">
             <div className="flex items-center justify-center gap-4 mb-5">
               <div className="h-px w-8 bg-gold/40" />
-              <span className="text-gold/60 text-[10px] tracking-[0.4em] uppercase font-golos">Преподаватели</span>
+              <span className="text-gold/60 text-[10px] tracking-[0.4em] uppercase font-golos">МХАТ · Щукина · ВГИК · ГИТИС · Вахтангова</span>
               <div className="h-px w-8 bg-gold/40" />
             </div>
             <h2 className="font-playfair text-4xl font-bold text-foreground">
               Наши <span className="italic text-gradient-gold">педагоги</span>
             </h2>
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 mb-8">
             {mainTeachers.map((t) => (
               <button
                 key={t.id}
@@ -195,9 +167,7 @@ export default function AboutPage({ onNavigate }: AboutPageProps) {
                   <div className="w-14 h-14 rounded-full bg-gradient-to-br from-gold/20 to-gold-dark/20 border border-gold/30 flex items-center justify-center flex-shrink-0 group-hover:border-gold/60 transition-all duration-300">
                     <span className="font-playfair font-bold text-2xl text-gold">{t.name[0]}</span>
                   </div>
-                  <div className="min-w-0">
-                    <h3 className="font-playfair text-base font-semibold text-foreground leading-tight">{t.name}</h3>
-                  </div>
+                  <h3 className="font-playfair text-base font-semibold text-foreground leading-tight">{t.name}</h3>
                 </div>
                 <p className="font-golos text-xs text-gold mb-1">{t.role}</p>
                 <p className="font-golos text-xs text-muted-foreground leading-relaxed">{t.detail}</p>
@@ -208,30 +178,14 @@ export default function AboutPage({ onNavigate }: AboutPageProps) {
             ))}
           </div>
 
-          <div className="mt-6 text-center">
+          <div className="text-center">
             <button
-              onClick={() => setShowAllTeachers(!showAllTeachers)}
+              onClick={() => onNavigate('all-teachers')}
               className="btn-outline-gold px-8 py-3 rounded-full font-golos text-sm inline-flex items-center gap-2"
             >
-              <Icon name={showAllTeachers ? 'ChevronUp' : 'Users'} size={15} />
-              {showAllTeachers ? 'Скрыть' : 'Другие преподаватели'}
+              <Icon name="Users" size={15} />
+              Все преподаватели
             </button>
-
-            {showAllTeachers && (
-              <div className="mt-8 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3 animate-fade-in">
-                {otherTeachers.map((name, i) => (
-                  <div
-                    key={i}
-                    className="card-glass rounded-xl p-3 flex items-center gap-3 border border-gold/10"
-                  >
-                    <div className="w-9 h-9 rounded-full bg-gold/10 border border-gold/20 flex items-center justify-center flex-shrink-0">
-                      <span className="font-playfair font-bold text-sm text-gold">{name[0]}</span>
-                    </div>
-                    <span className="font-golos text-sm text-muted-foreground text-left leading-tight">{name}</span>
-                  </div>
-                ))}
-              </div>
-            )}
           </div>
         </div>
       </section>

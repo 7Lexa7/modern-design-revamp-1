@@ -10,6 +10,7 @@ import ProfilePage from '@/pages/ProfilePage';
 import ReviewsPage from '@/pages/ReviewsPage';
 import AdminPage from '@/pages/AdminPage';
 import TeacherPage from '@/pages/TeacherPage';
+import AllTeachersPage from '@/pages/AllTeachersPage';
 import Icon from '@/components/ui/icon';
 
 type Page = 'home' | 'about' | 'courses' | 'gallery' | 'enroll' | 'login' | 'profile' | 'reviews' | 'admin' | string;
@@ -98,6 +99,9 @@ export default function App() {
         )}
         {currentPage === 'teacher' && (
           <TeacherPage teacherId={teacherId} onNavigate={handleNavigate} />
+        )}
+        {currentPage === 'all-teachers' && (
+          <AllTeachersPage onNavigate={handleNavigate} />
         )}
       </main>
 
