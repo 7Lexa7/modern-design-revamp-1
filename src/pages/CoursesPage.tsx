@@ -183,9 +183,19 @@ export default function CoursesPage({ onNavigate }: CoursesPageProps) {
               </ul>
             </div>
 
+            <div className="border-t border-gold/10 pt-5 mb-5 flex items-end justify-between">
+              <div>
+                <div className="text-[9px] tracking-[0.25em] uppercase text-gold/40 font-golos mb-1">Стоимость</div>
+                <div className="font-playfair text-2xl font-bold text-gradient-gold">20 000 ₽</div>
+              </div>
+              <div className="text-[10px] text-muted-foreground/50 font-golos text-right leading-tight">
+                за полный<br/>курс
+              </div>
+            </div>
+
             <button
               onClick={() => onNavigate('enroll')}
-              className="btn-outline-gold w-full py-3 rounded-full font-golos text-sm font-medium"
+              className="btn-gold w-full py-3 rounded-full font-golos text-sm font-medium"
             >
               Записаться
             </button>
